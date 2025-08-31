@@ -14,26 +14,69 @@ class PortfolioApp extends StatelessWidget {
       title: 'Developer Portfolio',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color(0xFF0B0F13),
+        scaffoldBackgroundColor: const Color(0xFF0F1418),
         textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'monospace'),
       ),
-      home: const PortfolioScreen(),
+      home: PortfolioPage(),
     );
   }
 }
 
-class PortfolioScreen extends StatelessWidget {
-  const PortfolioScreen({super.key});
+class PortfolioPage extends StatefulWidget {
+  PortfolioPage({super.key});
 
-  // غيّر هذا إلى رابط صورتك
-  final String profileImage = 'https://i.pravatar.cc/400?u=portfolio-sample';
-
-  static const Color background = Color(0xFF0B0F13);
-  static const Color sidebarColor = Color(0xFF0E1114);
-  static const Color panelColor = Color(0xFF111418);
-  static const Color cardColor = Color(0xFF0F1418);
-  static const Color accentBlue = Color(0xFF4EA8FF);
+  static const Color sidebarColor = Color(0xFF0B0F12);
+  static const Color panelColor = Color(0xFF12161A);
+  static const Color accentBlue = Color(0xFF5AA7FF);
   static const Color nameYellow = Color(0xFFF2E089);
+
+  @override
+  State<PortfolioPage> createState() => _PortfolioPageState();
+
+  static Widget _fileItem({
+    required IconData icon,
+    required String label,
+    Color? color,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          Icon(icon, size: 18, color: color ?? Colors.white70),
+          const SizedBox(width: 10),
+          Text(label, style: const TextStyle(color: Colors.white70)),
+        ],
+      ),
+    );
+  }
+
+  static Widget _techCircle(IconData icon) {
+    return Container(
+      width: 44,
+      height: 44,
+      decoration: BoxDecoration(
+        color: const Color(0xFF0E1622),
+        shape: BoxShape.circle,
+        border: Border.all(color: const Color(0xFF17212B)),
+      ),
+      child: Center(child: FaIcon(icon, color: accentBlue, size: 18)),
+    );
+  }
+}
+
+class _PortfolioPageState extends State<PortfolioPage> {
+  // استخدم الرابط الذي أعطيتني
+  final String profileImage =
+      'https://bpcfdupkxxalmryqdkym.supabase.co/storage/v1/object/public/images/1756482500823.jpg';
+
+  int selectedIndex = 0;
+
+  final List<Map<String, dynamic>> files = [
+    {"name": "home.jsx", "icon": Icons.code, "color": Colors.cyan},
+    {"name": "about.html", "icon": Icons.html, "color": Colors.orange},
+    {"name": "projects.js", "icon": Icons.javascript, "color": Colors.amber},
+    {"name": "resume.json", "icon": Icons.data_object, "color": Colors.green},
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -44,15 +87,51 @@ class PortfolioScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ---- الشريط الجانبي (desktop only) ----
+            SizedBox(
+              width: 60,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: const [
+                      SizedBox(height: 10),
+                      _SocialIcon(icon: FontAwesomeIcons.copy),
+                      SizedBox(height: 10),
+                      _SocialIcon(icon: FontAwesomeIcons.twitter),
+                      SizedBox(height: 10),
+                      _SocialIcon(icon: FontAwesomeIcons.facebookF),
+                      SizedBox(height: 10),
+                      _SocialIcon(icon: FontAwesomeIcons.linkedinIn),
+                      SizedBox(height: 10),
+                      _SocialIcon(icon: FontAwesomeIcons.github),
+                      SizedBox(height: 10),
+                      _SocialIcon(icon: FontAwesomeIcons.envelope),
+                      SizedBox(height: 10),
+                      _SocialIcon(icon: FontAwesomeIcons.tiktok),
+                      SizedBox(height: 10),
+                      _SocialIcon(icon: FontAwesomeIcons.envelope),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      _SocialIcon(icon: FontAwesomeIcons.user),
+                      SizedBox(height: 10),
+                      _SocialIcon(icon: FontAwesomeIcons.gear),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            // ===== شريط جانبي ثابت (icons + files) =====
             if (isDesktop)
               Container(
                 width: 220,
-                color: sidebarColor,
+                color: PortfolioPage.sidebarColor,
                 padding: const EdgeInsets.symmetric(
-                  vertical: 18,
+                  vertical: 16,
                   horizontal: 12,
                 ),
                 child: Column(
@@ -63,22 +142,22 @@ class PortfolioScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.white54, fontSize: 12),
                     ),
                     const SizedBox(height: 12),
-                    _fileRow(
+                    PortfolioPage._fileItem(
                       icon: Icons.code,
                       label: 'home.jsx',
                       color: Colors.cyan,
                     ),
-                    _fileRow(
+                    PortfolioPage._fileItem(
                       icon: Icons.html,
                       label: 'about.html',
                       color: Colors.orange,
                     ),
-                    _fileRow(
+                    PortfolioPage._fileItem(
                       icon: Icons.javascript,
                       label: 'projects.js',
                       color: Colors.amber,
                     ),
-                    _fileRow(
+                    PortfolioPage._fileItem(
                       icon: Icons.data_object,
                       label: 'resume.json',
                       color: Colors.green,
@@ -86,30 +165,18 @@ class PortfolioScreen extends StatelessWidget {
                     const SizedBox(height: 18),
                     const Divider(color: Colors.black45),
                     const SizedBox(height: 12),
-                    // أيقونات عمودية على يسار التصميم
-                    Column(
-                      children: [
-                        _squareIcon(Icons.facebook),
-                        const SizedBox(height: 8),
-                        _squareIcon(Icons.link_off),
-                        const SizedBox(height: 8),
-                        _squareIcon(Icons.email),
-                        const SizedBox(height: 8),
-                        _squareIcon(Icons.settings),
-                      ],
-                    ),
+
+                    // أيقونات اجتماعية رأسية
                   ],
                 ),
               ),
 
-            if (isDesktop) const SizedBox(width: 18),
-
-            // ---- المحتوى الرئيسي ----
+            // ===== المحتوى الرئيسي =====
             Expanded(
               child: SingleChildScrollView(
                 padding: EdgeInsets.symmetric(
-                  vertical: 20,
-                  horizontal: isDesktop ? 32 : 16,
+                  vertical: 22,
+                  horizontal: isDesktop ? 28 : 16,
                 ),
                 child: Center(
                   child: ConstrainedBox(
@@ -117,40 +184,104 @@ class PortfolioScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // ----- أعلى الصفحة: الصورة + الاسم -----
+                        // ---------------- Top Files Bar ----------------
+                        Container(
+                          height: 50,
+                          color: Colors.black, // خلفية سوداء ثابتة
+                          child: Row(
+                            children: List.generate(files.length, (index) {
+                              final isActive = selectedIndex == index;
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    selectedIndex = index;
+                                  });
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 8),
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color:
+                                        isActive
+                                            ? const Color(0xFF0D1117)
+                                            : Colors
+                                                .transparent, // خلفية صفراء للنشط
+                                    border: Border(
+                                      top: BorderSide(
+                                        color:
+                                            isActive
+                                                ? Colors.yellow
+                                                : Colors
+                                                    .transparent, // خط أصفر أعلى النشط
+                                        width: 2,
+                                      ),
+                                    ),
+                                  ),
+                                  width: 140,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        files[index]["icon"],
+                                        color: files[index]["color"],
+                                        size: 30,
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Text(
+                                        files[index]["name"],
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                        ),
+
+                        // ---------------- Content ----------------
+                        const SizedBox(height: 20),
+
+                        // -------- Profile and Info Row --------
+                        // Header (avatar + name + details)
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // صورة دائرية مع إطار أزرق
+                            // Avatar with blue stroke
                             Container(
                               padding: const EdgeInsets.all(4),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                border: Border.all(color: accentBlue, width: 3),
+                                border: Border.all(
+                                  color: PortfolioPage.accentBlue,
+                                  width: 3,
+                                ),
                               ),
                               child: CircleAvatar(
                                 radius: isTablet ? 52 : (isDesktop ? 70 : 48),
                                 backgroundImage: NetworkImage(profileImage),
-                                backgroundColor: Colors.grey[800],
                               ),
                             ),
                             const SizedBox(width: 20),
-                            // النصوص بجانب الصورة
+                            // Name & info
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Izuka Chigozie Emmanuel Brain',
+                                    'Ala Eddine Abbassi',
                                     style: TextStyle(
                                       fontFamily: 'monospace',
-                                      fontSize: isDesktop ? 34 : 22,
+                                      color: PortfolioPage.nameYellow,
+                                      fontSize: isDesktop ? 34 : 20,
                                       fontWeight: FontWeight.w800,
-                                      color: nameYellow,
-                                      letterSpacing: 0.8,
+                                      letterSpacing: 0.6,
                                     ),
                                   ),
-                                  const SizedBox(height: 8),
+                                  const SizedBox(height: 10),
                                   Text(
                                     'AI Software Developer',
                                     style: TextStyle(
@@ -182,15 +313,13 @@ class PortfolioScreen extends StatelessWidget {
                                           text: 'Founder of ',
                                           style: TextStyle(
                                             color: Colors.white70,
-                                            fontSize: 14,
                                           ),
                                         ),
                                         TextSpan(
                                           text: 'Sarcastic Geeks Trybe',
                                           style: TextStyle(
-                                            color: accentBlue,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
+                                            color: PortfolioPage.accentBlue,
+                                            fontWeight: FontWeight.w700,
                                           ),
                                         ),
                                       ],
@@ -202,35 +331,44 @@ class PortfolioScreen extends StatelessWidget {
                           ],
                         ),
 
-                        const SizedBox(height: 28),
+                        const SizedBox(height: 26),
 
-                        // ----- Tech Stack -----
+                        // Tech Stack row
                         Text(
                           '⚡ Tech Stack',
                           style: TextStyle(
-                            color: accentBlue,
+                            color: PortfolioPage.accentBlue,
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
+                        Divider(color: Colors.black45),
                         const SizedBox(height: 12),
                         Wrap(
                           spacing: 12,
                           runSpacing: 12,
                           children: [
-                            _techIcon(FontAwesomeIcons.bootstrap),
-                            _techIcon(FontAwesomeIcons.wordpress),
-                            _techIcon(FontAwesomeIcons.react),
-                            _techIcon(FontAwesomeIcons.nodeJs),
-                            _techIcon(FontAwesomeIcons.github),
-                            _techIcon(FontAwesomeIcons.database),
-                            _techIcon(FontAwesomeIcons.ethereum),
+                            PortfolioPage._techCircle(
+                              FontAwesomeIcons.bootstrap,
+                            ),
+                            PortfolioPage._techCircle(
+                              FontAwesomeIcons.wordpress,
+                            ),
+                            PortfolioPage._techCircle(FontAwesomeIcons.js),
+                            PortfolioPage._techCircle(FontAwesomeIcons.react),
+                            PortfolioPage._techCircle(FontAwesomeIcons.nodeJs),
+                            PortfolioPage._techCircle(
+                              FontAwesomeIcons.database,
+                            ),
+                            PortfolioPage._techCircle(
+                              FontAwesomeIcons.ethereum,
+                            ),
                           ],
                         ),
 
                         const SizedBox(height: 28),
 
-                        // ----- Education & Experience (Cards) -----
+                        // Education & Experience cards
                         isDesktop
                             ? Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -247,7 +385,6 @@ class PortfolioScreen extends StatelessWidget {
                                 _infoCardExperience(),
                               ],
                             ),
-
                         const SizedBox(height: 40),
                       ],
                     ),
@@ -261,54 +398,11 @@ class PortfolioScreen extends StatelessWidget {
     );
   }
 
-  // ---- Widgets صغيرة ----
-  static Widget _fileRow({
-    required IconData icon,
-    required String label,
-    Color? color,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
-      child: Row(
-        children: [
-          Icon(icon, size: 18, color: color ?? Colors.white70),
-          const SizedBox(width: 10),
-          Text(label, style: const TextStyle(color: Colors.white70)),
-        ],
-      ),
-    );
-  }
-
-  static Widget _squareIcon(IconData icon) {
-    return Container(
-      width: 38,
-      height: 38,
-      decoration: BoxDecoration(
-        color: const Color(0xFF0D1116),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Icon(icon, size: 18, color: Colors.white70),
-    );
-  }
-
-  Widget _techIcon(IconData icon) {
-    return Container(
-      width: 44,
-      height: 44,
-      decoration: BoxDecoration(
-        color: const Color(0xFF0E1622),
-        shape: BoxShape.circle,
-        border: Border.all(color: const Color(0xFF17212B)),
-      ),
-      child: Center(child: FaIcon(icon, size: 18, color: accentBlue)),
-    );
-  }
-
   Widget _infoCardEducation() {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: cardColor,
+        color: PortfolioPage.panelColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: const [
           BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 4)),
@@ -316,40 +410,46 @@ class PortfolioScreen extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: const [
           Text(
             '🎓 Education History',
             style: TextStyle(
-              color: accentBlue,
+              color: PortfolioPage.accentBlue,
               fontSize: 16,
               fontWeight: FontWeight.w700,
             ),
           ),
-          const SizedBox(height: 12),
-          const Divider(color: Colors.black45),
-          const SizedBox(height: 10),
+          SizedBox(height: 12),
+          Divider(color: Colors.black45),
+          SizedBox(height: 10),
           Text(
             'iBukas Developer Experiment Lab',
-            style: TextStyle(color: nameYellow, fontWeight: FontWeight.w700),
+            style: TextStyle(
+              color: PortfolioPage.nameYellow,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           Text(
             'Bukas Global Investments',
             style: TextStyle(color: Colors.white70),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           Text('2022 - Present', style: TextStyle(color: Colors.redAccent)),
-          const SizedBox(height: 14),
+          SizedBox(height: 14),
           Text(
             'FULL-STACK WITH HTML, CSS, JAVASCRIPT, NODE, REACT, POSTGRESQL, WEB3 AND DAPPS',
-            style: TextStyle(color: nameYellow, fontWeight: FontWeight.w700),
+            style: TextStyle(
+              color: PortfolioPage.nameYellow,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           Text(
             'Udemy INC. and Dr Angela Yu',
             style: TextStyle(color: Colors.white70),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           Text('2022 - 2024', style: TextStyle(color: Colors.redAccent)),
         ],
       ),
@@ -360,7 +460,7 @@ class PortfolioScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: cardColor,
+        color: PortfolioPage.panelColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: const [
           BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 4)),
@@ -368,53 +468,75 @@ class PortfolioScreen extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: const [
           Text(
             '💼 Professional Experience',
             style: TextStyle(
-              color: accentBlue,
+              color: PortfolioPage.accentBlue,
               fontSize: 16,
               fontWeight: FontWeight.w700,
             ),
           ),
-          const SizedBox(height: 12),
-          const Divider(color: Colors.black45),
-          const SizedBox(height: 10),
+          SizedBox(height: 12),
+          Divider(color: Colors.black45),
+          SizedBox(height: 10),
           Text(
             'Advertorial Hub',
-            style: TextStyle(color: nameYellow, fontWeight: FontWeight.w700),
+            style: TextStyle(
+              color: PortfolioPage.nameYellow,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           Text(
             'Remote: Lagos State, Nigeria',
             style: TextStyle(color: Colors.white70),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           Text(
             'Backend Developer with Express',
             style: TextStyle(color: Colors.white70),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           Text('2025 - Present', style: TextStyle(color: Colors.redAccent)),
-          const SizedBox(height: 14),
+          SizedBox(height: 14),
           Text(
             'Virtuous Tech Enterprise',
-            style: TextStyle(color: nameYellow, fontWeight: FontWeight.w700),
+            style: TextStyle(
+              color: PortfolioPage.nameYellow,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           Text(
             'Remote: Edo State, Nigeria',
             style: TextStyle(color: Colors.white70),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           Text(
             'Frontend Developer with React',
             style: TextStyle(color: Colors.white70),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           Text('2024', style: TextStyle(color: Colors.redAccent)),
         ],
       ),
+    );
+  }
+}
+
+// --- social icon widget (for sidebar) ---
+class _SocialIcon extends StatelessWidget {
+  final IconData icon;
+  const _SocialIcon({required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 36,
+      height: 36,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+      child: Center(child: FaIcon(icon, size: 25, color: Colors.white70)),
     );
   }
 }
