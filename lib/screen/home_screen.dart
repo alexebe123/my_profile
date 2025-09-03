@@ -422,35 +422,18 @@ class _PortfolioPageState extends State<PortfolioPage> {
           SizedBox(height: 12),
           Divider(color: Colors.black45),
           SizedBox(height: 10),
-          Text(
-            'iBukas Developer Experiment Lab',
-            style: TextStyle(
-              color: PortfolioPage.nameYellow,
-              fontWeight: FontWeight.w700,
-            ),
+          InfoCardEducationWidget(
+            educationInstitution: "iBukas Developer Experiment Lab",
+            educationCompany: "Bukas Global Investments",
+            educationYear: "2022 - Present",
           ),
-          SizedBox(height: 6),
-          Text(
-            'Bukas Global Investments',
-            style: TextStyle(color: Colors.white70),
-          ),
-          SizedBox(height: 6),
-          Text('2022 - Present', style: TextStyle(color: Colors.redAccent)),
           SizedBox(height: 14),
-          Text(
-            'FULL-STACK WITH HTML, CSS, JAVASCRIPT, NODE, REACT, POSTGRESQL, WEB3 AND DAPPS',
-            style: TextStyle(
-              color: PortfolioPage.nameYellow,
-              fontWeight: FontWeight.w700,
-            ),
+          InfoCardEducationWidget(
+            educationInstitution:
+                "University of Benin (UniBen) opsefsf oqeqpokd",
+            educationCompany: "B.Sc. Computer Science ",
+            educationYear: "2018 - 2022",
           ),
-          SizedBox(height: 6),
-          Text(
-            'Udemy INC. and Dr Angela Yu',
-            style: TextStyle(color: Colors.white70),
-          ),
-          SizedBox(height: 6),
-          Text('2022 - 2024', style: TextStyle(color: Colors.redAccent)),
         ],
       ),
     );
@@ -468,7 +451,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           Text(
             '💼 Professional Experience',
             style: TextStyle(
@@ -480,45 +463,113 @@ class _PortfolioPageState extends State<PortfolioPage> {
           SizedBox(height: 12),
           Divider(color: Colors.black45),
           SizedBox(height: 10),
-          Text(
-            'Advertorial Hub',
-            style: TextStyle(
-              color: PortfolioPage.nameYellow,
-              fontWeight: FontWeight.w700,
-            ),
+          InfoCardExperienceWidget(
+            name: 'Freelance Developer',
+            location: 'Remote',
+            job: 'Fullstack Developer',
+            duration: '2019 - Present',
           ),
-          SizedBox(height: 6),
-          Text(
-            'Remote: Lagos State, Nigeria',
-            style: TextStyle(color: Colors.white70),
-          ),
-          SizedBox(height: 6),
-          Text(
-            'Backend Developer with Express',
-            style: TextStyle(color: Colors.white70),
-          ),
-          SizedBox(height: 6),
-          Text('2025 - Present', style: TextStyle(color: Colors.redAccent)),
           SizedBox(height: 14),
-          Text(
-            'Virtuous Tech Enterprise',
-            style: TextStyle(
-              color: PortfolioPage.nameYellow,
-              fontWeight: FontWeight.w700,
+          InfoCardExperienceWidget(
+            name: 'Software Engineer Intern',
+            location: 'Lagos, Nigeria',
+            job: 'Fullstack Developer',
+            duration: '2021 - 2022',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class InfoCardExperienceWidget extends StatelessWidget {
+  InfoCardExperienceWidget({
+    super.key,
+    required this.name,
+    required this.location,
+    required this.job,
+    required this.duration,
+  });
+  String name = 'Freelance Developer';
+  String location = 'Remote';
+  String job = 'Fullstack Developer';
+  String duration = '2019 - Present';
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 2, // سماكة الخط
+          height: 80, // طول الخط
+          color: Colors.grey[700], // لون الخط
+        ),
+        SizedBox(width: 6),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              name,
+              style: TextStyle(
+                color: PortfolioPage.nameYellow,
+                fontWeight: FontWeight.w700,
+              ),
             ),
+            SizedBox(height: 6),
+            Text(location, style: TextStyle(color: Colors.white70)),
+            SizedBox(height: 6),
+            Text(job, style: TextStyle(color: Colors.white70)),
+            SizedBox(height: 6),
+            Text(duration, style: TextStyle(color: Colors.redAccent)),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class InfoCardEducationWidget extends StatelessWidget {
+  final String _educationInstitution;
+  final String _educationCompany;
+  final String _educationYear;
+
+  const InfoCardEducationWidget({
+    super.key,
+    required String educationInstitution,
+    required String educationCompany,
+    required String educationYear,
+  }) : _educationInstitution = educationInstitution,
+       _educationCompany = educationCompany,
+       _educationYear = educationYear;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Color.fromARGB(255, 21, 23, 26),
+      child: Row(
+        children: [
+          Container(
+            width: 2, // سماكة الخط
+            height: 60, // طول الخط
+            color: Colors.grey[700], // لون الخط
           ),
-          SizedBox(height: 6),
-          Text(
-            'Remote: Edo State, Nigeria',
-            style: TextStyle(color: Colors.white70),
+          SizedBox(width: 6),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _educationInstitution,
+                style: TextStyle(
+                  color: PortfolioPage.nameYellow,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              SizedBox(height: 6),
+              Text(_educationCompany, style: TextStyle(color: Colors.white70)),
+              SizedBox(height: 6),
+              Text(_educationYear, style: TextStyle(color: Colors.redAccent)),
+            ],
           ),
-          SizedBox(height: 6),
-          Text(
-            'Frontend Developer with React',
-            style: TextStyle(color: Colors.white70),
-          ),
-          SizedBox(height: 6),
-          Text('2024', style: TextStyle(color: Colors.redAccent)),
         ],
       ),
     );
