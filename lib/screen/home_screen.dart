@@ -83,6 +83,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
     final w = MediaQuery.of(context).size.width;
     final isDesktop = w >= 1000;
     final isTablet = w >= 700 && w < 1000;
+    bool isActive = false;
 
     return Scaffold(
       body: SafeArea(
@@ -134,6 +135,59 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   vertical: 16,
                   horizontal: 12,
                 ),
+                /**
+                 * List.generate(files.length, (index) {
+                              final isActive = selectedIndex == index;
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    selectedIndex = index;
+                                  });
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 8),
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color:
+                                        isActive
+                                            ? const Color(0xFF0D1117)
+                                            : Colors
+                                                .transparent, // خلفية صفراء للنشط
+                                    border: Border(
+                                      top: BorderSide(
+                                        color:
+                                            isActive
+                                                ? Colors.yellow
+                                                : Colors
+                                                    .transparent, // خط أصفر أعلى النشط
+                                        width: 2,
+                                      ),
+                                    ),
+                                  ),
+                                  width: 140,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        files[index]["icon"],
+                                        color: files[index]["color"],
+                                        size: 30,
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Text(
+                                        files[index]["name"],
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }),
+                        
+                 */
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -142,26 +196,30 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       style: TextStyle(color: Colors.white54, fontSize: 12),
                     ),
                     const SizedBox(height: 12),
-                    PortfolioPage._fileItem(
-                      icon: Icons.code,
-                      label: 'home.jsx',
-                      color: Colors.cyan,
+                    Column(
+                      children: List.generate(files.length, (index) {
+                        isActive = selectedIndex == index;
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedIndex = index;
+                            });
+                          },
+                          child: Container(
+                            color:
+                                isActive
+                                    ? const Color(0xFF161B1F)
+                                    : Colors.transparent,
+                            child: PortfolioPage._fileItem(
+                              icon: files[index]["icon"],
+                              label: files[index]["name"],
+                              color: files[index]["color"],
+                            ),
+                          ),
+                        );
+                      }),
                     ),
-                    PortfolioPage._fileItem(
-                      icon: Icons.html,
-                      label: 'about.html',
-                      color: Colors.orange,
-                    ),
-                    PortfolioPage._fileItem(
-                      icon: Icons.javascript,
-                      label: 'projects.js',
-                      color: Colors.amber,
-                    ),
-                    PortfolioPage._fileItem(
-                      icon: Icons.data_object,
-                      label: 'resume.json',
-                      color: Colors.green,
-                    ),
+
                     const SizedBox(height: 18),
                     const Divider(color: Colors.black45),
                     const SizedBox(height: 12),
