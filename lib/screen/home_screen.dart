@@ -1,29 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_profile/screen/about_screen.dart';
+import 'package:my_profile/screen/contact_me_screen.dart';
 import 'package:my_profile/screen/info_screen.dart';
 import 'package:my_profile/screen/project_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-void main() {
-  runApp(const PortfolioApp());
-}
-
-class PortfolioApp extends StatelessWidget {
-  const PortfolioApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Developer Portfolio',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color(0xFF0F1418),
-        textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'monospace'),
-      ),
-      home: PortfolioPage(),
-    );
-  }
-}
 
 class PortfolioPage extends StatefulWidget {
   const PortfolioPage({super.key});
@@ -77,9 +58,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
   final List<Map<String, dynamic>> files = [
     {"name": "home.jsx", "icon": Icons.code, "color": Colors.cyan},
-    {"name": "about.html", "icon": Icons.html, "color": Colors.orange},
-    {"name": "projects.js", "icon": Icons.javascript, "color": Colors.amber},
-    {"name": "resume.json", "icon": Icons.data_object, "color": Colors.green},
+    {"name": "projects.html", "icon": Icons.html, "color": Colors.orange},
+    {"name": "about.js", "icon": Icons.javascript, "color": Colors.amber},
+    {"name": "Contact.json", "icon": Icons.data_object, "color": Colors.green},
   ];
 
   Future<void> _launchUrl(String url) async {
@@ -90,10 +71,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
   }
 
   final List<Widget> _pages = [
-    ProjectScreen(),
     InfoScreen(),
-    Container(),
-    Container(),
+    ProjectScreen(),
+    AboutScreen(),
+    ContactMeScreen(),
   ];
   @override
   Widget build(BuildContext context) {
