@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const PortfolioApp());
@@ -23,7 +24,7 @@ class PortfolioApp extends StatelessWidget {
 }
 
 class PortfolioPage extends StatefulWidget {
-  PortfolioPage({super.key});
+  const PortfolioPage({super.key});
 
   static const Color sidebarColor = Color(0xFF0B0F12);
   static const Color panelColor = Color(0xFF12161A);
@@ -78,6 +79,13 @@ class _PortfolioPageState extends State<PortfolioPage> {
     {"name": "resume.json", "icon": Icons.data_object, "color": Colors.green},
   ];
 
+  Future<void> _launchUrl(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw 'لا يمكن فتح الرابط: $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final w = MediaQuery.of(context).size.width;
@@ -96,23 +104,58 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 children: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: const [
+                    children: [
                       SizedBox(height: 10),
-                      _SocialIcon(icon: FontAwesomeIcons.copy),
+                      Container(
+                        width: 60,
+                        height: 60,
+                        color: PortfolioPage.sidebarColor,
+                        child: _SocialIcon(icon: FontAwesomeIcons.copy),
+                      ),
                       SizedBox(height: 10),
-                      _SocialIcon(icon: FontAwesomeIcons.twitter),
+                      GestureDetector(
+                        onTap: () {
+                          _launchUrl("https://github.com/alexebe123");
+                        },
+                        child: _SocialIcon(icon: FontAwesomeIcons.twitter),
+                      ),
                       SizedBox(height: 10),
-                      _SocialIcon(icon: FontAwesomeIcons.facebookF),
+                      GestureDetector(
+                        onTap: () {
+                          _launchUrl(
+                            "https://www.facebook.com/ali.loo.591704/",
+                          );
+                        },
+                        child: _SocialIcon(icon: FontAwesomeIcons.facebookF),
+                      ),
                       SizedBox(height: 10),
-                      _SocialIcon(icon: FontAwesomeIcons.linkedinIn),
+                      GestureDetector(
+                        onTap: () {
+                          _launchUrl("https://www.linkedin.com/in/alexebe123");
+                        },
+                        child: _SocialIcon(icon: FontAwesomeIcons.linkedinIn),
+                      ),
                       SizedBox(height: 10),
-                      _SocialIcon(icon: FontAwesomeIcons.github),
+                      GestureDetector(
+                        onTap: () {
+                          _launchUrl("https://github.com/alexebe123");
+                        },
+                        child: _SocialIcon(icon: FontAwesomeIcons.github),
+                      ),
                       SizedBox(height: 10),
-                      _SocialIcon(icon: FontAwesomeIcons.envelope),
+                      GestureDetector(
+                        onTap: () {
+                          _launchUrl("https://www.gmail.com/");
+                        },
+                        child: _SocialIcon(icon: FontAwesomeIcons.envelope),
+                      ),
                       SizedBox(height: 10),
-                      _SocialIcon(icon: FontAwesomeIcons.tiktok),
-                      SizedBox(height: 10),
-                      _SocialIcon(icon: FontAwesomeIcons.envelope),
+                      GestureDetector(
+                        onTap: () {
+                          _launchUrl("https://www.tiktok.com/@alexebe123");
+                        },
+                        child: _SocialIcon(icon: FontAwesomeIcons.tiktok),
+                      ),
                     ],
                   ),
                   Column(
@@ -135,59 +178,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   vertical: 16,
                   horizontal: 12,
                 ),
-                /**
-                 * List.generate(files.length, (index) {
-                              final isActive = selectedIndex == index;
-                              return GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    selectedIndex = index;
-                                  });
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.only(right: 8),
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        isActive
-                                            ? const Color(0xFF0D1117)
-                                            : Colors
-                                                .transparent, // خلفية صفراء للنشط
-                                    border: Border(
-                                      top: BorderSide(
-                                        color:
-                                            isActive
-                                                ? Colors.yellow
-                                                : Colors
-                                                    .transparent, // خط أصفر أعلى النشط
-                                        width: 2,
-                                      ),
-                                    ),
-                                  ),
-                                  width: 140,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        files[index]["icon"],
-                                        color: files[index]["color"],
-                                        size: 30,
-                                      ),
-                                      const SizedBox(width: 6),
-                                      Text(
-                                        files[index]["name"],
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }),
-                        
-                 */
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -541,17 +531,17 @@ class _PortfolioPageState extends State<PortfolioPage> {
 }
 
 class InfoCardExperienceWidget extends StatelessWidget {
-  InfoCardExperienceWidget({
+  const InfoCardExperienceWidget({
     super.key,
     required this.name,
     required this.location,
     required this.job,
     required this.duration,
   });
-  String name = 'Freelance Developer';
-  String location = 'Remote';
-  String job = 'Fullstack Developer';
-  String duration = '2019 - Present';
+  final String name;
+  final String location;
+  final String job;
+  final String duration;
 
   @override
   Widget build(BuildContext context) {
