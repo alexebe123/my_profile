@@ -102,48 +102,48 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         child: _SocialIcon(icon: FontAwesomeIcons.copy),
                       ),
                       SizedBox(height: 10),
-                      GestureDetector(
-                        onTap: () {
+                      IconButton(
+                        onPressed: () {
                           _launchUrl("https://github.com/alexebe123");
                         },
-                        child: _SocialIcon(icon: FontAwesomeIcons.twitter),
+                        icon: _SocialIcon(icon: FontAwesomeIcons.twitter),
                       ),
                       SizedBox(height: 10),
-                      GestureDetector(
-                        onTap: () {
+                      IconButton(
+                        onPressed: () {
                           _launchUrl(
                             "https://www.facebook.com/ali.loo.591704/",
                           );
                         },
-                        child: _SocialIcon(icon: FontAwesomeIcons.facebookF),
+                        icon: _SocialIcon(icon: FontAwesomeIcons.facebookF),
                       ),
                       SizedBox(height: 10),
-                      GestureDetector(
-                        onTap: () {
+                      IconButton(
+                        onPressed: () {
                           _launchUrl("https://www.linkedin.com/in/alexebe123");
                         },
-                        child: _SocialIcon(icon: FontAwesomeIcons.linkedinIn),
+                        icon: _SocialIcon(icon: FontAwesomeIcons.linkedinIn),
                       ),
                       SizedBox(height: 10),
-                      GestureDetector(
-                        onTap: () {
+                      IconButton(
+                        onPressed: () {
                           _launchUrl("https://github.com/alexebe123");
                         },
-                        child: _SocialIcon(icon: FontAwesomeIcons.github),
+                        icon: _SocialIcon(icon: FontAwesomeIcons.github),
                       ),
                       SizedBox(height: 10),
-                      GestureDetector(
-                        onTap: () {
+                      IconButton(
+                        onPressed: () {
                           _launchUrl("https://www.gmail.com/");
                         },
-                        child: _SocialIcon(icon: FontAwesomeIcons.envelope),
+                        icon: _SocialIcon(icon: FontAwesomeIcons.envelope),
                       ),
                       SizedBox(height: 10),
-                      GestureDetector(
-                        onTap: () {
+                      IconButton(
+                        onPressed: () {
                           _launchUrl("https://www.tiktok.com/@alexebe123");
                         },
-                        child: _SocialIcon(icon: FontAwesomeIcons.tiktok),
+                        icon: _SocialIcon(icon: FontAwesomeIcons.tiktok),
                       ),
                     ],
                   ),
