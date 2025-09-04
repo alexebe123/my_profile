@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_profile/screen/info_screen.dart';
+import 'package:my_profile/screen/project_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() {
@@ -25,7 +27,6 @@ class PortfolioApp extends StatelessWidget {
 
 class PortfolioPage extends StatefulWidget {
   const PortfolioPage({super.key});
-
   static const Color sidebarColor = Color(0xFF0B0F12);
   static const Color panelColor = Color(0xFF12161A);
   static const Color accentBlue = Color(0xFF5AA7FF);
@@ -51,7 +52,7 @@ class PortfolioPage extends StatefulWidget {
     );
   }
 
-  static Widget _techCircle(IconData icon) {
+  static Widget techCircle(IconData icon) {
     return Container(
       width: 44,
       height: 44,
@@ -72,6 +73,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
   int selectedIndex = 0;
 
+  final PageController _pageController = PageController();
+
   final List<Map<String, dynamic>> files = [
     {"name": "home.jsx", "icon": Icons.code, "color": Colors.cyan},
     {"name": "about.html", "icon": Icons.html, "color": Colors.orange},
@@ -86,11 +89,16 @@ class _PortfolioPageState extends State<PortfolioPage> {
     }
   }
 
+  final List<Widget> _pages = [
+    ProjectScreen(),
+    InfoScreen(),
+    Container(),
+    Container(),
+  ];
   @override
   Widget build(BuildContext context) {
     final w = MediaQuery.of(context).size.width;
     final isDesktop = w >= 1000;
-    final isTablet = w >= 700 && w < 1000;
     bool isActive = false;
 
     return Scaffold(
@@ -193,6 +201,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           onTap: () {
                             setState(() {
                               selectedIndex = index;
+                              // استبدال jumpToPage بـ animateToPage لإضافة انزلاق سلس
+                              _pageController.animateToPage(
+                                index,
+                                duration: const Duration(milliseconds: 900),
+                                curve: Curves.easeInOut,
+                              );
                             });
                           },
                           child: Container(
@@ -243,6 +257,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                 onTap: () {
                                   setState(() {
                                     selectedIndex = index;
+                                    // استبدال jumpToPage بـ animateToPage لإضافة انزلاق سلس
+                                    _pageController.animateToPage(
+                                      index,
+                                      duration: const Duration(
+                                        milliseconds: 900,
+                                      ),
+                                      curve: Curves.easeInOut,
+                                    );
                                   });
                                 },
                                 child: Container(
@@ -289,151 +311,18 @@ class _PortfolioPageState extends State<PortfolioPage> {
                             }),
                           ),
                         ),
-
-                        // ---------------- Content ----------------
-                        const SizedBox(height: 20),
-
-                        // -------- Profile and Info Row --------
-                        // Header (avatar + name + details)
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Avatar with blue stroke
-                            Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: PortfolioPage.accentBlue,
-                                  width: 3,
-                                ),
-                              ),
-                              child: CircleAvatar(
-                                radius: isTablet ? 52 : (isDesktop ? 70 : 48),
-                                backgroundImage: NetworkImage(profileImage),
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            // Name & info
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Ala Eddine Abbassi',
-                                    style: TextStyle(
-                                      fontFamily: 'monospace',
-                                      color: PortfolioPage.nameYellow,
-                                      fontSize: isDesktop ? 34 : 20,
-                                      fontWeight: FontWeight.w800,
-                                      letterSpacing: 0.6,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    'AI Software Developer',
-                                    style: TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: isDesktop ? 16 : 14,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 6),
-                                  Text(
-                                    '5+ Years of Dev Experience',
-                                    style: TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: isDesktop ? 14 : 12,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 6),
-                                  Text(
-                                    'Freelance, Remote & Hybrid',
-                                    style: TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: isDesktop ? 14 : 12,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 6),
-                                  RichText(
-                                    text: TextSpan(
-                                      children: [
-                                        const TextSpan(
-                                          text: 'Founder of ',
-                                          style: TextStyle(
-                                            color: Colors.white70,
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: 'Sarcastic Geeks Trybe',
-                                          style: TextStyle(
-                                            color: PortfolioPage.accentBlue,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        const SizedBox(height: 26),
-
-                        // Tech Stack row
-                        Text(
-                          '⚡ Tech Stack',
-                          style: TextStyle(
-                            color: PortfolioPage.accentBlue,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
+                        SizedBox(
+                          height: 700,
+                          width: 1000,
+                          child: PageView(
+                            controller: _pageController,
+                            children: _pages,
+                            // تمكين التمرير إذا أراد المستخدم السحب اليدوي مع الاحتفاظ بسلاسة الانتقال
+                            physics: const BouncingScrollPhysics(),
                           ),
                         ),
-                        Divider(color: Colors.black45),
-                        const SizedBox(height: 12),
-                        Wrap(
-                          spacing: 12,
-                          runSpacing: 12,
-                          children: [
-                            PortfolioPage._techCircle(
-                              FontAwesomeIcons.bootstrap,
-                            ),
-                            PortfolioPage._techCircle(
-                              FontAwesomeIcons.wordpress,
-                            ),
-                            PortfolioPage._techCircle(FontAwesomeIcons.js),
-                            PortfolioPage._techCircle(FontAwesomeIcons.react),
-                            PortfolioPage._techCircle(FontAwesomeIcons.nodeJs),
-                            PortfolioPage._techCircle(
-                              FontAwesomeIcons.database,
-                            ),
-                            PortfolioPage._techCircle(
-                              FontAwesomeIcons.ethereum,
-                            ),
-                          ],
-                        ),
 
-                        const SizedBox(height: 28),
-
-                        // Education & Experience cards
-                        isDesktop
-                            ? Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(child: _infoCardEducation()),
-                                const SizedBox(width: 18),
-                                Expanded(child: _infoCardExperience()),
-                              ],
-                            )
-                            : Column(
-                              children: [
-                                _infoCardEducation(),
-                                const SizedBox(height: 12),
-                                _infoCardExperience(),
-                              ],
-                            ),
-                        const SizedBox(height: 40),
+                        // ---------------- Main Content ----------------
                       ],
                     ),
                   ),
@@ -442,89 +331,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _infoCardEducation() {
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: PortfolioPage.panelColor,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: const [
-          BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 4)),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text(
-            '🎓 Education History',
-            style: TextStyle(
-              color: PortfolioPage.accentBlue,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          SizedBox(height: 12),
-          Divider(color: Colors.black45),
-          SizedBox(height: 10),
-          InfoCardEducationWidget(
-            educationInstitution: "iBukas Developer Experiment Lab",
-            educationCompany: "Bukas Global Investments",
-            educationYear: "2022 - Present",
-          ),
-          SizedBox(height: 14),
-          InfoCardEducationWidget(
-            educationInstitution:
-                "University of Benin (UniBen) opsefsf oqeqpokd",
-            educationCompany: "B.Sc. Computer Science ",
-            educationYear: "2018 - 2022",
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _infoCardExperience() {
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: PortfolioPage.panelColor,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: const [
-          BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 4)),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '💼 Professional Experience',
-            style: TextStyle(
-              color: PortfolioPage.accentBlue,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          SizedBox(height: 12),
-          Divider(color: Colors.black45),
-          SizedBox(height: 10),
-          InfoCardExperienceWidget(
-            name: 'Freelance Developer',
-            location: 'Remote',
-            job: 'Fullstack Developer',
-            duration: '2019 - Present',
-          ),
-          SizedBox(height: 14),
-          InfoCardExperienceWidget(
-            name: 'Software Engineer Intern',
-            location: 'Lagos, Nigeria',
-            job: 'Fullstack Developer',
-            duration: '2021 - 2022',
-          ),
-        ],
       ),
     );
   }
