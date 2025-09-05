@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_profile/screen/about_screen.dart';
 import 'package:my_profile/screen/contact_me_screen.dart';
+import 'package:my_profile/screen/dashbord_screen.dart';
 import 'package:my_profile/screen/info_screen.dart';
 import 'package:my_profile/screen/project_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -149,9 +150,23 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   ),
                   Column(
                     children: [
-                      _SocialIcon(icon: FontAwesomeIcons.user),
+                      IconButton(
+                        onPressed: () {
+                          _launchUrl("https://www.fiverr.com/alexebe123");
+                        },
+                        icon: _SocialIcon(icon: FontAwesomeIcons.user),
+                      ),
                       SizedBox(height: 10),
-                      _SocialIcon(icon: FontAwesomeIcons.gear),
+                      IconButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const DashboardScreen(),
+                            ),
+                          );
+                        },
+                        icon: _SocialIcon(icon: FontAwesomeIcons.gear),
+                      ),
                     ],
                   ),
                 ],
