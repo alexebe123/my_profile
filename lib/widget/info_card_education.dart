@@ -1,12 +1,13 @@
 
   import 'package:flutter/material.dart';
+import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/screen/home_screen.dart';
 
 Widget infoCardEducation() {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: PortfolioPage.panelColor,
+        color: AppConstant.panelColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: const [
           BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 4)),
@@ -18,7 +19,7 @@ Widget infoCardEducation() {
           Text(
             '🎓 Education History',
             style: TextStyle(
-              color: PortfolioPage.accentBlue,
+              color: AppConstant.accentBlue,
               fontSize: 16,
               fontWeight: FontWeight.w700,
             ),

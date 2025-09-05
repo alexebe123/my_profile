@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:my_profile/screen/home_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -89,7 +90,12 @@ class _Sidebar extends StatelessWidget {
             icon: _SidebarItem(icon: Icons.settings, label: 'Settings'),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PortfolioPage()),
+              );
+            },
             icon: _SidebarItem(icon: Icons.person, label: 'Profile'),
           ),
         ],

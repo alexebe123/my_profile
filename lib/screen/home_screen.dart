@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/screen/about_screen.dart';
 import 'package:my_profile/screen/contact_me_screen.dart';
 import 'package:my_profile/screen/dashbord_screen.dart';
@@ -9,10 +10,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 class PortfolioPage extends StatefulWidget {
   const PortfolioPage({super.key});
-  static const Color sidebarColor = Color(0xFF0B0F12);
-  static const Color panelColor = Color(0xFF12161A);
-  static const Color accentBlue = Color(0xFF5AA7FF);
-  static const Color nameYellow = Color(0xFFF2E089);
 
   @override
   State<PortfolioPage> createState() => _PortfolioPageState();
@@ -43,7 +40,7 @@ class PortfolioPage extends StatefulWidget {
         shape: BoxShape.circle,
         border: Border.all(color: const Color(0xFF17212B)),
       ),
-      child: Center(child: FaIcon(icon, color: accentBlue, size: 18)),
+      child: Center(child: FaIcon(icon, color: AppConstant.accentBlue, size: 18)),
     );
   }
 }
@@ -99,7 +96,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       Container(
                         width: 60,
                         height: 60,
-                        color: PortfolioPage.sidebarColor,
+                        color: AppConstant.sidebarColor,
                         child: _SocialIcon(icon: FontAwesomeIcons.copy),
                       ),
                       SizedBox(height: 10),
@@ -177,7 +174,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
             if (isDesktop)
               Container(
                 width: 220,
-                color: PortfolioPage.sidebarColor,
+                color: AppConstant.sidebarColor,
                 padding: const EdgeInsets.symmetric(
                   vertical: 16,
                   horizontal: 12,
@@ -361,7 +358,7 @@ class InfoCardExperienceWidget extends StatelessWidget {
             Text(
               name,
               style: TextStyle(
-                color: PortfolioPage.nameYellow,
+                color: AppConstant.nameYellow,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -410,7 +407,7 @@ class InfoCardEducationWidget extends StatelessWidget {
               Text(
                 _educationInstitution,
                 style: TextStyle(
-                  color: PortfolioPage.nameYellow,
+                  color: AppConstant.nameYellow,
                   fontWeight: FontWeight.w700,
                 ),
               ),

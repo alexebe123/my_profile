@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/screen/home_screen.dart';
 import 'package:my_profile/widget/info_card_education.dart';
 import 'package:my_profile/widget/info_cart_experience.dart';
@@ -29,7 +30,7 @@ class InfoScreen extends StatelessWidget {
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: PortfolioPage.accentBlue, width: 3),
+                border: Border.all(color: AppConstant.accentBlue, width: 3),
               ),
               child: CircleAvatar(
                 radius: isTablet ? 52 : (isDesktop ? 70 : 48),
@@ -46,7 +47,7 @@ class InfoScreen extends StatelessWidget {
                     'Ala Eddine Abbassi',
                     style: TextStyle(
                       fontFamily: 'monospace',
-                      color: PortfolioPage.nameYellow,
+                      color: AppConstant.nameYellow,
                       fontSize: isDesktop ? 34 : 20,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 0.6,
@@ -87,7 +88,7 @@ class InfoScreen extends StatelessWidget {
                         TextSpan(
                           text: 'Sarcastic Geeks Trybe',
                           style: TextStyle(
-                            color: PortfolioPage.accentBlue,
+                            color: AppConstant.accentBlue,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -106,7 +107,7 @@ class InfoScreen extends StatelessWidget {
         Text(
           '⚡ Tech Stack',
           style: TextStyle(
-            color: PortfolioPage.accentBlue,
+            color: AppConstant.accentBlue,
             fontSize: 18,
             fontWeight: FontWeight.w700,
           ),
