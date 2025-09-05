@@ -79,7 +79,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
     bool isActive = false;
 
     return Scaffold(
-      backgroundColor: AppConstant.backgroundColor,
       body: SafeArea(
         child: Row(
           children: [
@@ -157,7 +156,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) =>  DashboardScreen(),
+                              builder: (context) => DashboardScreen(),
                             ),
                           );
                         },
