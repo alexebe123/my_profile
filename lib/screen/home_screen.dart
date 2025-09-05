@@ -40,16 +40,14 @@ class PortfolioPage extends StatefulWidget {
         shape: BoxShape.circle,
         border: Border.all(color: const Color(0xFF17212B)),
       ),
-      child: Center(child: FaIcon(icon, color: AppConstant.accentBlue, size: 18)),
+      child: Center(
+        child: FaIcon(icon, color: AppConstant.accentBlue, size: 18),
+      ),
     );
   }
 }
 
 class _PortfolioPageState extends State<PortfolioPage> {
-  // استخدم الرابط الذي أعطيتني
-  final String profileImage =
-      'https://bpcfdupkxxalmryqdkym.supabase.co/storage/v1/object/public/images/1756482500823.jpg';
-
   int selectedIndex = 0;
 
   final PageController _pageController = PageController();
@@ -81,6 +79,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
     bool isActive = false;
 
     return Scaffold(
+      backgroundColor: AppConstant.backgroundColor,
       body: SafeArea(
         child: Row(
           children: [
@@ -158,7 +157,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const DashboardScreen(),
+                              builder: (context) =>  DashboardScreen(),
                             ),
                           );
                         },
@@ -197,7 +196,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                               // استبدال jumpToPage بـ animateToPage لإضافة انزلاق سلس
                               _pageController.animateToPage(
                                 index,
-                                duration: const Duration(milliseconds: 900),
+                                duration: const Duration(milliseconds: 100),
                                 curve: Curves.easeInOut,
                               );
                             });

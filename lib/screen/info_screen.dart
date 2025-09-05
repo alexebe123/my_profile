@@ -11,7 +11,6 @@ class InfoScreen extends StatelessWidget {
    
   @override
   Widget build(BuildContext context) {
-    const profileImage = "https://bpcfdupkxxalmryqdkym.supabase.co/storage/v1/object/public/images/1756482500823.jpg";
     final w = MediaQuery.of(context).size.width;
     final isTablet = w >= 700 && w < 1000;
     final isDesktop = w >= 1000;
@@ -34,7 +33,7 @@ class InfoScreen extends StatelessWidget {
               ),
               child: CircleAvatar(
                 radius: isTablet ? 52 : (isDesktop ? 70 : 48),
-                backgroundImage: NetworkImage(profileImage),
+                backgroundImage: NetworkImage(AppConstant.profileImage),
               ),
             ),
             const SizedBox(width: 20),

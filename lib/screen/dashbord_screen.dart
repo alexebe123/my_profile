@@ -1,17 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/screen/home_screen.dart';
 
-class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  int isSelected = 0;
+  updateScreen(int index) {
+    setState(() {
+      isSelected = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppConstant.backgroundColor,
       body: Row(
         children: [
           // Sidebar
-          const _Sidebar(),
+          _Sidebar(isSelected: isSelected, updateScreen: updateScreen),
           // Main content area
           Expanded(
             child: SingleChildScrollView(
@@ -47,18 +61,20 @@ class DashboardScreen extends StatelessWidget {
 }
 
 class _Sidebar extends StatelessWidget {
-  const _Sidebar({Key? key}) : super(key: key);
+  _Sidebar({Key? key, required this.isSelected, required this.updateScreen})
+    : super(key: key);
+  final int isSelected;
+  final ValueChanged<int> updateScreen;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 250,
-      color: const Color(0xFF161625), // Slightly darker sidebar color
+      color: AppConstant.panelColor, // Slightly darker sidebar color
       child: Column(
         children: [
           // Logo/App name
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 32.0),
+          SizedBox(
             child: Text(
               'Dashboard',
               style: TextStyle(
@@ -69,34 +85,54 @@ class _Sidebar extends StatelessWidget {
             ),
           ),
           // Navigation items
-          IconButton(
-            onPressed: () {},
-            icon: _SidebarItem(
+          GestureDetector(
+            onTap: () {
+              updateScreen(0);
+            },
+            child: _SidebarItem(
               icon: Icons.home,
               label: 'Dashboard',
-              isSelected: true,
+              isSelected: (isSelected == 0),
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: _SidebarItem(icon: Icons.folder_open, label: 'Projects'),
+          GestureDetector(
+            onTap: () {
+              updateScreen(1);
+            },
+            child: _SidebarItem(
+              icon: Icons.folder_open,
+              label: 'Projects',
+              isSelected: (isSelected == 1),
+            ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: _SidebarItem(icon: Icons.analytics, label: 'Analytics'),
+          GestureDetector(
+            onTap: () {
+              updateScreen(2);
+            },
+            child: _SidebarItem(
+              icon: Icons.analytics,
+              label: 'Analytics',
+              isSelected: (isSelected == 2),
+            ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: _SidebarItem(icon: Icons.settings, label: 'Settings'),
+          GestureDetector(
+            onTap: () {
+              updateScreen(3);
+            },
+            child: _SidebarItem(
+              icon: Icons.settings,
+              label: 'Settings',
+              isSelected: (isSelected == 3),
+            ),
           ),
-          IconButton(
-            onPressed: () {
+          GestureDetector(
+            onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => PortfolioPage()),
               );
             },
-            icon: _SidebarItem(icon: Icons.person, label: 'Profile'),
+            child: _SidebarItem(icon: Icons.person, label: 'Profile'),
           ),
         ],
       ),
@@ -109,7 +145,7 @@ class _SidebarItem extends StatelessWidget {
   final String label;
   final bool isSelected;
 
-  const _SidebarItem({
+  _SidebarItem({
     Key? key,
     required this.icon,
     required this.label,
@@ -160,7 +196,7 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Card(
-        color: const Color(0xFF1E1E3F),
+        color: AppConstant.panelColor,
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Padding(
@@ -198,7 +234,7 @@ class _RecentProjects extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: const Color(0xFF1E1E3F),
+      color: AppConstant.panelColor,
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
@@ -306,7 +342,7 @@ class _AnalyticsChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: const Color(0xFF1E1E3F),
+      color: AppConstant.panelColor,
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
@@ -451,9 +487,9 @@ class _DashboardHeader extends StatelessWidget {
                 shape: BoxShape.circle,
                 border: Border.all(color: Colors.white, width: 2),
                 image: const DecorationImage(
-                  image: AssetImage(
-                    'assets/profile_pic.png',
-                  ), // Use your own image path
+                  image: NetworkImage(
+                    AppConstant.profileImage,
+                  ), // Use your own image URL
                   fit: BoxFit.cover,
                 ),
               ),

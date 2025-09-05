@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/screen/home_screen.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -20,7 +21,7 @@ class AboutScreen extends StatelessWidget {
         CircleAvatar(
           radius: 60,
           backgroundImage: NetworkImage(
-            "https://bpcfdupkxxalmryqdkym.supabase.co/storage/v1/object/public/images/1756482500823.jpg", // ضع رابط صورتك هنا
+            AppConstant.profileImage, // ضع رابط صورتك هنا
           ),
         ),
         SizedBox(height: 16),
