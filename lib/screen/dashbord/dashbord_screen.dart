@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_profile/res/app_constant.dart';
-import 'package:my_profile/screen/dashbord_info_screen.dart';
-import 'package:my_profile/screen/project_dashbord_screen.dart';
+import 'package:my_profile/screen/dashbord/dashbord_info_screen.dart';
+import 'package:my_profile/screen/dashbord/project_dashbord_screen.dart';
 import 'package:my_profile/widget/sidebar_dashbord.dart';
 
 class DashboardScreen extends StatefulWidget {

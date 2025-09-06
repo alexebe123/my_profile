@@ -20,7 +20,7 @@ class ProjectDashbordScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 36,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF2E2E2E),
+                    color: Colors.white,
                   ),
                 ),
                 ElevatedButton(
@@ -108,9 +108,9 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 350,
+      width: 320,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color.fromARGB(255, 24, 32, 43),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -135,7 +135,7 @@ class ProjectCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF2E2E2E),
+                    color: Colors.white70,
                   ),
                 ),
               ),
@@ -169,9 +169,9 @@ class ProjectCard extends StatelessWidget {
           Row(
             children: [
               _buildActionButton(Icons.edit, 'Edit'),
-              const SizedBox(width: 8),
+              const SizedBox(width: 5),
               _buildActionButton(Icons.delete, 'Delete'),
-              const SizedBox(width: 8),
+              const SizedBox(width: 5),
               _buildActionButton(Icons.visibility, 'View Details'),
             ],
           ),
@@ -195,7 +195,7 @@ class ProjectCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 18),
+            Icon(icon, size: 14),
             const SizedBox(width: 6),
             Text(label, style: const TextStyle(fontSize: 12)),
           ],

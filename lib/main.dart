@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFF0F1418),
         textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'monospace'),
       ),
-      home: PortfolioPage(),
+      home: const PortfolioPage(),
     );
   }
 }
