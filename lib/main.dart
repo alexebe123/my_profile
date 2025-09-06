@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_profile/screen/dashbord/analyse_screen.dart';
+import 'package:my_profile/screen/dashbord/dashbord_screen.dart';
 import 'package:my_profile/screen/home_screen.dart';
 
 void main() {
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFF0F1418),
         textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'monospace'),
       ),
-      home: const PortfolioPage(),
+      home: const DashboardScreen(),
     );
   }
 }
