@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/screen/dashbord/analyse_screen.dart';
 import 'package:my_profile/screen/dashbord/dashbord_info_screen.dart';
+import 'package:my_profile/screen/dashbord/profile_settings_screen.dart';
 import 'package:my_profile/screen/dashbord/project_dashbord_screen.dart';
 import 'package:my_profile/widget/sidebar_dashbord.dart';
 
@@ -23,6 +24,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   final PageController _pageController = PageController();
   final List<Widget> _pages = [
+    const ProfileSettings(),
     const DashbordInfoScreen(),
     const ProjectDashbordScreen(),
     const AnalyzeScreen(),
