@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_profile/res/app_constant.dart';
-import 'package:my_profile/screen/home_screen.dart';
-import 'package:my_profile/widget/info_card_education.dart';
-import 'package:my_profile/widget/info_cart_experience.dart';
+import 'package:my_profile/screen/home/home_screen.dart';
+import 'package:my_profile/screen/widget/info_card_education.dart';
+import 'package:my_profile/screen/widget/info_cart_experience.dart';
 
 class InfoScreen extends StatelessWidget {
   const InfoScreen({super.key});

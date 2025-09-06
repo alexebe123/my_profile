@@ -1,7 +1,7 @@
 
   import 'package:flutter/material.dart';
 import 'package:my_profile/res/app_constant.dart';
-import 'package:my_profile/screen/home_screen.dart';
+import 'package:my_profile/screen/home/home_screen.dart';
 
 Widget infoCardEducation() {
     return Container(

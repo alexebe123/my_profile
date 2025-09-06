@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_profile/res/app_constant.dart';
-import 'package:my_profile/screen/about_screen.dart';
-import 'package:my_profile/screen/contact_me_screen.dart';
+import 'package:my_profile/screen/home/about_screen.dart';
+import 'package:my_profile/screen/home/contact_me_screen.dart';
 import 'package:my_profile/screen/dashbord/dashbord_screen.dart';
-import 'package:my_profile/screen/info_screen.dart';
-import 'package:my_profile/screen/project_screen.dart';
+import 'package:my_profile/screen/home/info_screen.dart';
+import 'package:my_profile/screen/home/project_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PortfolioPage extends StatefulWidget {

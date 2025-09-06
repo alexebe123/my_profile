@@ -4,7 +4,7 @@ import 'package:my_profile/screen/dashbord/analyse_screen.dart';
 import 'package:my_profile/screen/dashbord/dashbord_info_screen.dart';
 import 'package:my_profile/screen/dashbord/profile_settings_screen.dart';
 import 'package:my_profile/screen/dashbord/project_dashbord_screen.dart';
-import 'package:my_profile/widget/sidebar_dashbord.dart';
+import 'package:my_profile/screen/widget/sidebar_dashbord.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -24,10 +24,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   final PageController _pageController = PageController();
   final List<Widget> _pages = [
-    const ProfileSettings(),
     const DashbordInfoScreen(),
     const ProjectDashbordScreen(),
     const AnalyzeScreen(),
+    const ProfileSettings(),
   ];
 
   @override

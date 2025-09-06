@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:my_profile/widget/user_demographics_card.dart';
+import 'package:my_profile/screen/widget/user_demographics_card.dart';
 
 class AnalyzeScreen extends StatelessWidget {
   const AnalyzeScreen({super.key});

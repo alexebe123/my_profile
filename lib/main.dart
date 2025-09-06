@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_profile/screen/dashbord/analyse_screen.dart';
 import 'package:my_profile/screen/dashbord/dashbord_screen.dart';
-import 'package:my_profile/screen/home_screen.dart';
+import 'package:my_profile/screen/home/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
