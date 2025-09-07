@@ -8,7 +8,6 @@ import 'package:my_profile/screen/widget/info_cart_experience.dart';
 class InfoScreen extends StatelessWidget {
   const InfoScreen({super.key});
 
-   
   @override
   Widget build(BuildContext context) {
     final w = MediaQuery.of(context).size.width;
@@ -117,13 +116,13 @@ class InfoScreen extends StatelessWidget {
           spacing: 12,
           runSpacing: 12,
           children: [
-            PortfolioPage.techCircle(FontAwesomeIcons.bootstrap),
-            PortfolioPage.techCircle(FontAwesomeIcons.wordpress),
-            PortfolioPage.techCircle(FontAwesomeIcons.js),
-            PortfolioPage.techCircle(FontAwesomeIcons.react),
-            PortfolioPage.techCircle(FontAwesomeIcons.nodeJs),
-            PortfolioPage.techCircle(FontAwesomeIcons.database),
-            PortfolioPage.techCircle(FontAwesomeIcons.ethereum),
+            HomeScreen.techCircle(FontAwesomeIcons.bootstrap),
+            HomeScreen.techCircle(FontAwesomeIcons.wordpress),
+            HomeScreen.techCircle(FontAwesomeIcons.js),
+            HomeScreen.techCircle(FontAwesomeIcons.react),
+            HomeScreen.techCircle(FontAwesomeIcons.nodeJs),
+            HomeScreen.techCircle(FontAwesomeIcons.database),
+            HomeScreen.techCircle(FontAwesomeIcons.ethereum),
           ],
         ),
 

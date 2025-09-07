@@ -8,11 +8,11 @@ import 'package:my_profile/screen/home/info_screen.dart';
 import 'package:my_profile/screen/home/project_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class PortfolioPage extends StatefulWidget {
-  const PortfolioPage({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<PortfolioPage> createState() => _PortfolioPageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 
   static Widget _fileItem({
     required IconData icon,
@@ -47,7 +47,7 @@ class PortfolioPage extends StatefulWidget {
   }
 }
 
-class _PortfolioPageState extends State<PortfolioPage> {
+class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
   final PageController _pageController = PageController();
@@ -205,7 +205,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                 isActive
                                     ? const Color(0xFF161B1F)
                                     : Colors.transparent,
-                            child: PortfolioPage._fileItem(
+                            child: HomeScreen._fileItem(
                               icon: files[index]["icon"],
                               label: files[index]["name"],
                               color: files[index]["color"],

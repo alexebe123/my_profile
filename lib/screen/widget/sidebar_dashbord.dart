@@ -74,7 +74,7 @@ class SidebarDashboard extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PortfolioPage()),
+                MaterialPageRoute(builder: (context) => HomeScreen()),
               );
             },
             child: _SidebarItem(icon: Icons.person, label: 'Profile'),
