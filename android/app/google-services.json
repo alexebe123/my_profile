@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "250872293296",
+    "project_id": "electro-daimn-house",
+    "storage_bucket": "electro-daimn-house.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250872293296:android:ba7c3282e1b49609af1875",
+        "android_client_info": {
+          "package_name": "com.example.my_profile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGohejGQk-dKAlV3AJ73XXuzHcSVKvOoI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
