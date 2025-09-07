@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_profile/notifiers/api_service_firebase.dart';
 import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/screen/home/home_screen.dart';
 import 'package:my_profile/screen/widget/info_card_education.dart';
 import 'package:my_profile/screen/widget/info_cart_experience.dart';
+import 'package:provider/provider.dart';
 
 class InfoScreen extends StatelessWidget {
   const InfoScreen({super.key});
@@ -32,7 +34,11 @@ class InfoScreen extends StatelessWidget {
               ),
               child: CircleAvatar(
                 radius: isTablet ? 52 : (isDesktop ? 70 : 48),
-                backgroundImage: NetworkImage(AppConstant.profileImage),
+                backgroundImage: NetworkImage(
+                  Provider.of<ApiServiceFirebase>(
+                    context,
+                  ).profileModel.imageUrl,
+                ),
               ),
             ),
             const SizedBox(width: 20),
@@ -42,7 +48,7 @@ class InfoScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Ala Eddine Abbassi',
+                    Provider.of<ApiServiceFirebase>(context).profileModel.name,
                     style: TextStyle(
                       fontFamily: 'monospace',
                       color: AppConstant.nameYellow,
@@ -61,7 +67,7 @@ class InfoScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    '5+ Years of Dev Experience',
+                    '${Provider.of<ApiServiceFirebase>(context).profileModel.yearsOfExperience} Years of Dev Experience',
                     style: TextStyle(
                       color: Colors.white70,
                       fontSize: isDesktop ? 14 : 12,

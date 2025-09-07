@@ -4,6 +4,8 @@ class ProfileModel {
   String imageUrl = '';
   String yearsOfExperience = '';
 
+  ProfileModel.empty();
+
   ProfileModel.fromJson(Map<String, dynamic> json) {
     try {
       id = json['\$id'];

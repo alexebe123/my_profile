@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_profile/notifiers/api_service_firebase.dart';
 import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/screen/home/about_screen.dart';
 import 'package:my_profile/screen/home/contact_me_screen.dart';
 import 'package:my_profile/screen/dashbord/dashbord_screen.dart';
 import 'package:my_profile/screen/home/info_screen.dart';
 import 'package:my_profile/screen/home/project_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -51,6 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
   final PageController _pageController = PageController();
+
+  @override
+  initState() {
+    super.initState();
+    Provider.of<ApiServiceFirebase>(context, listen: false).getData();
+  }
 
   final List<Map<String, dynamic>> files = [
     {"name": "home.jsx", "icon": Icons.code, "color": Colors.cyan},

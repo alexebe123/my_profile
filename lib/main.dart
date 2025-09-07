@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:my_profile/firebase_options.dart';
 import 'package:my_profile/notifiers/providers.dart';
 import 'package:my_profile/screen/home/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:my_profile/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+    options: DefaultFirebaseOptions.currentPlatform, // مهم جداً
   );
   runApp(const MyApp());
 }
