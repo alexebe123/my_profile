@@ -12,4 +12,5 @@ class AppConstant {
   static const String collectionIdProducts = 'Product';
   static const String collectionIdEducationHistory = 'EducationHistory';
   static const String collectionIdExperienceHistory = 'ExperienceHistory';
+  static const String collectionIdContactUs = 'ContactUs';
 }

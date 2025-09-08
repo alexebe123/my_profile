@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_profile/model/contact_us_model.dart';
+import 'package:my_profile/notifiers/api_service_firebase.dart';
+import 'package:provider/provider.dart';
 
 class ContactMeScreen extends StatefulWidget {
   const ContactMeScreen({super.key});
@@ -98,6 +101,16 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
+                      Provider.of<ApiServiceFirebase>(
+                        context,
+                        listen: false,
+                      ).addContact(
+                        ContactUsModel(
+                          name: name,
+                          email: email,
+                          message: message,
+                        ),
+                      );
                       ScaffoldMessenger.of(
                         context,
                       ).showSnackBar(SnackBar(content: Text("Message sent!")));

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_profile/model/contact_us_model.dart';
 import 'package:my_profile/model/education_history_model.dart';
 import 'package:my_profile/model/experience_history_model.dart';
 import 'package:my_profile/model/profile_model.dart';
@@ -114,5 +115,17 @@ class ApiServiceFirebase extends ChangeNotifier {
     } catch (e) {
       experienceHistory = [];
     }
+  }
+
+  Future<void> addContact(ContactUsModel contactUsModel) async {
+    // Implement your API call here
+    try {
+      await firebaseFirestore
+          .collection(AppConstant.collectionIdContactUs)
+          .add(contactUsModel.toJson());
+    } catch (e) {
+      // Handle error
+    }
+
   }
 }
