@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_profile/model/profile_model.dart';
 import 'package:my_profile/res/app_constant.dart';
+import 'package:my_profile/model/product_model.dart';
 
 class ApiServiceFirebase extends ChangeNotifier {
   static ApiServiceFirebase? _instance;
@@ -16,6 +17,7 @@ class ApiServiceFirebase extends ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   ProfileModel profileModel = ProfileModel.empty();
+  List<ProductModel> products = [];
 
   ApiServiceFirebase._internal();
 
@@ -40,6 +42,29 @@ class ApiServiceFirebase extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       ProfileModel.empty();
+    }
+  }
+
+  Future<void> getProducts() async {
+    // Implement your API call here
+    try {
+      final data =
+          await firebaseFirestore
+              .collection(AppConstant.collectionIdProducts)
+              .get();
+      if (data.docs.isNotEmpty) {
+        final list =
+            data.docs.map<ProductModel>((doc) {
+              var map = doc.data();
+              map["\$id"] = doc.id;
+              return ProductModel.fromJson(map);
+            }).toList();
+        list;
+        products.addAll(list);
+      }
+      notifyListeners();
+    } catch (e) {
+      products = [];
     }
   }
 }

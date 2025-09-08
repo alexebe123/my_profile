@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_profile/notifiers/api_service_firebase.dart';
+import 'package:provider/provider.dart';
 
 class ProjectScreen extends StatelessWidget {
   const ProjectScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -75,15 +76,24 @@ class ProjectScreen extends StatelessWidget {
                   crossAxisCount: 3,
                   childAspectRatio: 0.8, // تتحكم في الطول/العرض
                 ),
-                itemCount: 6,
+                itemCount:
+                    Provider.of<ApiServiceFirebase>(context).products.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(18.0),
                     child: ProjectCard(
-                      title: "Project Title",
-                      description: "A short description of the project.",
+                      title:
+                          Provider.of<ApiServiceFirebase>(
+                            context,
+                          ).products[index].name,
+                      description:
+                          Provider.of<ApiServiceFirebase>(
+                            context,
+                          ).products[index].description,
                       imageUrl:
-                          "https://bpcfdupkxxalmryqdkym.supabase.co/storage/v1/object/public/images/1756482500823.jpg",
+                          Provider.of<ApiServiceFirebase>(
+                            context,
+                          ).products[index].imageUrl,
                     ),
                   );
                 },
@@ -130,7 +140,7 @@ class ProjectCard extends StatelessWidget {
             borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
             child: Image.network(
               imageUrl,
-              height: 200,
+              height: 160,
               width: double.infinity,
               fit: BoxFit.cover,
             ),

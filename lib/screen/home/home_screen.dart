@@ -58,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
   initState() {
     super.initState();
     Provider.of<ApiServiceFirebase>(context, listen: false).getData();
+    Provider.of<ApiServiceFirebase>(context, listen: false).getProducts();
   }
 
   final List<Map<String, dynamic>> files = [

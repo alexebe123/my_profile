@@ -9,4 +9,5 @@ class AppConstant {
   static const String profileImage =
       'https://bpcfdupkxxalmryqdkym.supabase.co/storage/v1/object/public/images/1756482500823.jpg';
   static const String collectionIdUsers = 'Users';
+  static const String collectionIdProducts = 'Product';
 }
