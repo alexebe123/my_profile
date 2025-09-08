@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   initState() {
     super.initState();
-    Provider.of<ApiServiceFirebase>(context, listen: false).getData();
+    Provider.of<ApiServiceFirebase>(context, listen: false).getUsersData();
     Provider.of<ApiServiceFirebase>(context, listen: false).getProducts();
     Provider.of<ApiServiceFirebase>(
       context,

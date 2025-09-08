@@ -27,12 +27,12 @@ class ApiServiceFirebase extends ChangeNotifier {
   ApiServiceFirebase._internal();
 
   // Your API methods go here
-  Future<void> getData() async {
+  Future<void> getUsersData() async {
     // Implement your API call here
     try {
       final data =
           await firebaseFirestore
-              .collection(AppConstant.collectionIdEducationHistory)
+              .collection(AppConstant.collectionIdUsers)
               .get();
       if (data.docs.isNotEmpty) {
         final list =
@@ -126,6 +126,5 @@ class ApiServiceFirebase extends ChangeNotifier {
     } catch (e) {
       // Handle error
     }
-
   }
 }
