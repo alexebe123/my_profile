@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_profile/model/education_history_model.dart';
+import 'package:my_profile/model/experience_history_model.dart';
 import 'package:my_profile/model/profile_model.dart';
 import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/model/product_model.dart';
@@ -20,6 +21,7 @@ class ApiServiceFirebase extends ChangeNotifier {
   ProfileModel profileModel = ProfileModel.empty();
   List<ProductModel> products = [];
   List<EducationHistoryModel> educationHistory = [];
+  List<ExperienceHistoryModel> experienceHistory = [];
 
   ApiServiceFirebase._internal();
 
@@ -89,6 +91,28 @@ class ApiServiceFirebase extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       educationHistory = [];
+    }
+  }
+
+  Future<void> gtetExperienceHistory() async {
+    // Implement your API call here
+    try {
+      final data =
+          await firebaseFirestore
+              .collection(AppConstant.collectionIdExperienceHistory)
+              .get();
+      if (data.docs.isNotEmpty) {
+        final list =
+            data.docs.map<ExperienceHistoryModel>((doc) {
+              var map = doc.data();
+              map["\$id"] = doc.id;
+              return ExperienceHistoryModel.fromJson(map);
+            }).toList();
+        experienceHistory.addAll(list);
+      }
+      notifyListeners();
+    } catch (e) {
+      experienceHistory = [];
     }
   }
 }

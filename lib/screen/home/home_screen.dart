@@ -63,6 +63,10 @@ class _HomeScreenState extends State<HomeScreen> {
       context,
       listen: false,
     ).getEducationHistory();
+    Provider.of<ApiServiceFirebase>(
+      context,
+      listen: false,
+    ).gtetExperienceHistory();
   }
 
   final List<Map<String, dynamic>> files = [
@@ -344,12 +348,12 @@ class InfoCardExperienceWidget extends StatelessWidget {
   const InfoCardExperienceWidget({
     super.key,
     required this.name,
-    required this.location,
+    required this.jobStyle,
     required this.job,
     required this.duration,
   });
   final String name;
-  final String location;
+  final String jobStyle;
   final String job;
   final String duration;
 
@@ -374,11 +378,12 @@ class InfoCardExperienceWidget extends StatelessWidget {
               ),
             ),
             SizedBox(height: 6),
-            Text(location, style: TextStyle(color: Colors.white70)),
+            Text(jobStyle, style: TextStyle(color: Colors.white70)),
             SizedBox(height: 6),
             Text(job, style: TextStyle(color: Colors.white70)),
             SizedBox(height: 6),
             Text(duration, style: TextStyle(color: Colors.redAccent)),
+            SizedBox(height: 14),
           ],
         ),
       ],

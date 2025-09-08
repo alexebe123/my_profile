@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:my_profile/notifiers/api_service_firebase.dart';
 import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/screen/home/home_screen.dart';
+import 'package:provider/provider.dart';
 
-Widget infoCardExperience() {
+Widget infoCardExperience(BuildContext context) {
   return Container(
     padding: const EdgeInsets.all(18),
     decoration: BoxDecoration(
@@ -26,18 +28,27 @@ Widget infoCardExperience() {
         SizedBox(height: 12),
         Divider(color: Colors.black45),
         SizedBox(height: 10),
-        InfoCardExperienceWidget(
-          name: 'Freelance Developer',
-          location: 'Remote',
-          job: 'Fullstack Developer',
-          duration: '2019 - Present',
-        ),
-        SizedBox(height: 14),
-        InfoCardExperienceWidget(
-          name: 'Software Engineer Intern',
-          location: 'Lagos, Nigeria',
-          job: 'Fullstack Developer',
-          duration: '2021 - 2022',
+        SizedBox(
+          height: 200,
+          width: 400,
+          child: ListView.builder(
+            itemCount:
+                Provider.of<ApiServiceFirebase>(
+                  context,
+                ).experienceHistory.length,
+            itemBuilder: (context, index) {
+              final experience =
+                  Provider.of<ApiServiceFirebase>(
+                    context,
+                  ).experienceHistory[index];
+              return InfoCardExperienceWidget(
+                name: experience.title,
+                jobStyle: experience.jobStyle,
+                job: experience.jobTech,
+                duration: '${experience.startDate} - ${experience.endDate}',
+              );
+            },
+          ),
         ),
       ],
     ),
