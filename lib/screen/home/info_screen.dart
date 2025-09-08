@@ -139,14 +139,14 @@ class InfoScreen extends StatelessWidget {
             ? Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(child: infoCardEducation()),
+                Expanded(child: infoCardEducation(context)),
                 const SizedBox(width: 18),
                 Expanded(child: infoCardExperience()),
               ],
             )
             : Column(
               children: [
-                infoCardEducation(),
+                infoCardEducation(context),
                 const SizedBox(height: 12),
                 infoCardExperience(),
               ],

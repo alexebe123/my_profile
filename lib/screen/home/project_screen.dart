@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_profile/notifiers/api_service_firebase.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectScreen extends StatelessWidget {
   const ProjectScreen({super.key});
@@ -94,6 +95,10 @@ class ProjectScreen extends StatelessWidget {
                           Provider.of<ApiServiceFirebase>(
                             context,
                           ).products[index].imageUrl,
+                      linkGitHub:
+                          Provider.of<ApiServiceFirebase>(
+                            context,
+                          ).products[index].linkGithub,
                     ),
                   );
                 },
@@ -110,13 +115,22 @@ class ProjectCard extends StatelessWidget {
   final String title;
   final String description;
   final String imageUrl;
+  final String linkGitHub;
 
   const ProjectCard({
     super.key,
     required this.title,
     required this.description,
     required this.imageUrl,
+    required this.linkGitHub,
   });
+
+  Future<void> _launchUrl(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw 'لا يمكن فتح الرابط: $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -224,7 +238,9 @@ class ProjectCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      _launchUrl(linkGitHub);
+                    },
                     child: const Text("GitHub"),
                   ),
                 ),

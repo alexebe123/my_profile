@@ -59,6 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     Provider.of<ApiServiceFirebase>(context, listen: false).getData();
     Provider.of<ApiServiceFirebase>(context, listen: false).getProducts();
+    Provider.of<ApiServiceFirebase>(
+      context,
+      listen: false,
+    ).getEducationHistory();
   }
 
   final List<Map<String, dynamic>> files = [
@@ -419,9 +423,17 @@ class InfoCardEducationWidget extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 6),
-              Text(_educationCompany, style: TextStyle(color: Colors.white70)),
+              SizedBox(
+                width: 400,
+                child: Text(
+                  _educationCompany,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.white70),
+                ),
+              ),
               SizedBox(height: 6),
               Text(_educationYear, style: TextStyle(color: Colors.redAccent)),
+              SizedBox(height: 14),
             ],
           ),
         ],

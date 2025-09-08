@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_profile/model/education_history_model.dart';
 import 'package:my_profile/model/profile_model.dart';
 import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/model/product_model.dart';
@@ -18,6 +19,7 @@ class ApiServiceFirebase extends ChangeNotifier {
 
   ProfileModel profileModel = ProfileModel.empty();
   List<ProductModel> products = [];
+  List<EducationHistoryModel> educationHistory = [];
 
   ApiServiceFirebase._internal();
 
@@ -27,7 +29,7 @@ class ApiServiceFirebase extends ChangeNotifier {
     try {
       final data =
           await firebaseFirestore
-              .collection(AppConstant.collectionIdUsers)
+              .collection(AppConstant.collectionIdEducationHistory)
               .get();
       if (data.docs.isNotEmpty) {
         final list =
@@ -65,6 +67,28 @@ class ApiServiceFirebase extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       products = [];
+    }
+  }
+
+  Future<void> getEducationHistory() async {
+    // Implement your API call here
+    try {
+      final data =
+          await firebaseFirestore
+              .collection(AppConstant.collectionIdEducationHistory)
+              .get();
+      if (data.docs.isNotEmpty) {
+        final list =
+            data.docs.map<EducationHistoryModel>((doc) {
+              var map = doc.data();
+              map["\$id"] = doc.id;
+              return EducationHistoryModel.fromMap(map);
+            }).toList();
+        educationHistory.addAll(list);
+      }
+      notifyListeners();
+    } catch (e) {
+      educationHistory = [];
     }
   }
 }
