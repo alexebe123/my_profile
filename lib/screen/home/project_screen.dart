@@ -78,7 +78,7 @@ class ProjectScreen extends StatelessWidget {
                   childAspectRatio: 0.8, // تتحكم في الطول/العرض
                 ),
                 itemCount:
-                    Provider.of<ApiServiceFirebase>(context).products.length,
+                    Provider.of<ApiServiceFirebase>(context).projects.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(18.0),
@@ -86,19 +86,19 @@ class ProjectScreen extends StatelessWidget {
                       title:
                           Provider.of<ApiServiceFirebase>(
                             context,
-                          ).products[index].name,
+                          ).projects[index].name,
                       description:
                           Provider.of<ApiServiceFirebase>(
                             context,
-                          ).products[index].description,
+                          ).projects[index].description,
                       imageUrl:
                           Provider.of<ApiServiceFirebase>(
                             context,
-                          ).products[index].imageUrl,
+                          ).projects[index].imageUrl,
                       linkGitHub:
                           Provider.of<ApiServiceFirebase>(
                             context,
-                          ).products[index].linkGithub,
+                          ).projects[index].linkGithub,
                     ),
                   );
                 },

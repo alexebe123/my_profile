@@ -20,7 +20,7 @@ class ApiServiceFirebase extends ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   ProfileModel profileModel = ProfileModel.empty();
-  List<ProductModel> products = [];
+  List<ProjectModel> projects = [];
   List<EducationHistoryModel> educationHistory = [];
   List<ExperienceHistoryModel> experienceHistory = [];
 
@@ -59,17 +59,17 @@ class ApiServiceFirebase extends ChangeNotifier {
               .get();
       if (data.docs.isNotEmpty) {
         final list =
-            data.docs.map<ProductModel>((doc) {
+            data.docs.map<ProjectModel>((doc) {
               var map = doc.data();
               map["\$id"] = doc.id;
-              return ProductModel.fromJson(map);
+              return ProjectModel.fromJson(map);
             }).toList();
         list;
-        products.addAll(list);
+        projects.addAll(list);
       }
       notifyListeners();
     } catch (e) {
-      products = [];
+      projects = [];
     }
   }
 

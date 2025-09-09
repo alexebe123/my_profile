@@ -1,14 +1,15 @@
-class ProductModel {
+class ProjectModel {
   String id = "";
   String name = "";
   String description = "";
   String imageUrl = "";
   String linkGithub = "";
   String linkLiveDemo = "";
+  int status = 0; // 0: In Progress, 1: Completed
 
-  ProductModel.empty();
+  ProjectModel.empty();
 
-  ProductModel.fromJson(Map<String, dynamic> json) {
+  ProjectModel.fromJson(Map<String, dynamic> json) {
     try {
       id = json['\$id'];
     } catch (e) {}
@@ -26,6 +27,9 @@ class ProductModel {
     } catch (e) {}
     try {
       linkLiveDemo = json['linkLiveDemo'];
+    } catch (e) {}
+    try {
+      status = json['status'];
     } catch (e) {}
   }
 
@@ -45,6 +49,9 @@ class ProductModel {
     } catch (e) {}
     try {
       data['linkLiveDemo'] = linkLiveDemo;
+    } catch (e) {}
+    try {
+      data['status'] = status;
     } catch (e) {}
     return data;
   }

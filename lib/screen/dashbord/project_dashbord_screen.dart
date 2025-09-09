@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_profile/notifiers/api_service_firebase.dart';
+import 'package:provider/provider.dart';
 
 class ProjectDashbordScreen extends StatelessWidget {
   const ProjectDashbordScreen({super.key});
@@ -48,41 +50,37 @@ class ProjectDashbordScreen extends StatelessWidget {
             Wrap(
               spacing: 24,
               runSpacing: 24,
-              children: const [
-                ProjectCard(
-                  title: 'Project Auterniting',
-                  status: 'Active',
-                  statusColor: Color(0xFF4CAF50),
-                ),
-                ProjectCard(
-                  title: 'Project',
-                  status: 'Completed',
-                  statusColor: Color(0xFF2196F3),
-                ),
-                ProjectCard(
-                  title: 'Projects',
-                  status: 'On Hold',
-                  statusColor: Color(0xFF9E9E9E),
-                ),
-                ProjectCard(
-                  title: 'Project Exade',
-                  status: 'On Hold',
-                  statusColor: Color(0xFF9E9E9E),
-                ),
-                ProjectCard(
-                  title: 'Sucluess',
-                  status: 'On Hold',
-                  statusColor: Color(0xFF9E9E9E),
-                ),
-                ProjectCard(
-                  title: 'Witeut Eramianins',
-                  status: 'Active',
-                  statusColor: Color(0xFF4CAF50),
-                ),
-                ProjectCard(
-                  title: 'Troject Mand',
-                  status: 'On Hold',
-                  statusColor: Color(0xFF9E9E9E),
+              children: [
+                SizedBox(
+                  height: 600,
+                  width: 400,
+                  child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      return ProjectCard(
+                        decription:
+                            Provider.of<ApiServiceFirebase>(
+                              context,
+                            ).projects[index].description,
+                        title:
+                            Provider.of<ApiServiceFirebase>(
+                              context,
+                            ).projects[index].name,
+                        status:
+                            Provider.of<ApiServiceFirebase>(
+                                      context,
+                                    ).projects[index].status.toString() ==
+                                    "0"
+                                ? "In Progress"
+                                : "Completed",
+                        statusColor:
+                            index % 2 == 0 ? Colors.orange : Colors.green,
+                      );
+                    },
+                    itemCount:
+                        Provider.of<ApiServiceFirebase>(
+                          context,
+                        ).projects.length,
+                  ),
                 ),
               ],
             ),
@@ -97,12 +95,13 @@ class ProjectCard extends StatelessWidget {
   final String title;
   final String status;
   final Color statusColor;
-
+  final String decription;
   const ProjectCard({
     super.key,
     required this.title,
     required this.status,
     required this.statusColor,
+    required this.decription,
   });
 
   @override
@@ -161,8 +160,8 @@ class ProjectCard extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           // Placeholder text as in the image
-          const Text(
-            'Orey pram dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.',
+          Text(
+            decription,
             style: TextStyle(fontSize: 14, color: Color(0xFF6B6B6B)),
           ),
           const SizedBox(height: 24),
