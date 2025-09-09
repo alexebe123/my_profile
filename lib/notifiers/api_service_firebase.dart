@@ -29,6 +29,7 @@ class ApiServiceFirebase extends ChangeNotifier {
   // Your API methods go here
   Future<void> getUsersData() async {
     // Implement your API call here
+    profileModel = ProfileModel.empty();
     try {
       final data =
           await firebaseFirestore
@@ -52,6 +53,7 @@ class ApiServiceFirebase extends ChangeNotifier {
 
   Future<void> getProducts() async {
     // Implement your API call here
+    projects.clear();
     try {
       final data =
           await firebaseFirestore
@@ -75,6 +77,7 @@ class ApiServiceFirebase extends ChangeNotifier {
 
   Future<void> getEducationHistory() async {
     // Implement your API call here
+    educationHistory.clear();
     try {
       final data =
           await firebaseFirestore
@@ -97,6 +100,7 @@ class ApiServiceFirebase extends ChangeNotifier {
 
   Future<void> gtetExperienceHistory() async {
     // Implement your API call here
+    experienceHistory.clear();
     try {
       final data =
           await firebaseFirestore
