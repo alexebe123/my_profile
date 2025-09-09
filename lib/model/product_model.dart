@@ -7,6 +7,7 @@ class ProjectModel {
   String linkLiveDemo = "";
   int status = 0; // 0: In Progress, 1: Completed
 
+
   ProjectModel.empty();
 
   ProjectModel.fromJson(Map<String, dynamic> json) {

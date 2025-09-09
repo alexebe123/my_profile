@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +10,7 @@ import 'package:my_profile/model/experience_history_model.dart';
 import 'package:my_profile/model/profile_model.dart';
 import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/model/product_model.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ApiServiceFirebase extends ChangeNotifier {
   static ApiServiceFirebase? _instance;
@@ -131,4 +135,35 @@ class ApiServiceFirebase extends ChangeNotifier {
       // Handle error
     }
   }
+
+  Future<void> addProject(ProjectModel project) async {
+    try {
+      await firebaseFirestore
+          .collection(AppConstant.collectionIdProducts)
+          .add(project.toJson());
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  
+ Future<String> uploadPhoto(Uint8List bytes) async {
+  final fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+
+  try {
+    await Supabase.instance.client.storage
+        .from('images')
+        .uploadBinary(fileName, bytes);
+
+    final publicUrl = Supabase.instance.client.storage
+        .from('images')
+        .getPublicUrl(fileName);
+
+    return publicUrl;
+  } catch (e) {
+    print('Upload error: $e');
+    return "";
+  }
+}
+
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:my_profile/model/product_model.dart';
 import 'package:my_profile/notifiers/api_service_firebase.dart';
+import 'package:my_profile/screen/widget/edit_project_screen.dart';
 import 'package:provider/provider.dart';
 
 class ProjectDashbordScreen extends StatelessWidget {
   const ProjectDashbordScreen({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,17 @@ class ProjectDashbordScreen extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return EditProjectDialog(
+                          project: ProjectModel.empty(),
+                          isEdit: false,
+                        );
+                      },
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF333333),
                     foregroundColor: Colors.white,
@@ -57,23 +70,10 @@ class ProjectDashbordScreen extends StatelessWidget {
                   child: ListView.builder(
                     itemBuilder: (context, index) {
                       return ProjectCard(
-                        decription:
+                        projectModel:
                             Provider.of<ApiServiceFirebase>(
                               context,
-                            ).projects[index].description,
-                        title:
-                            Provider.of<ApiServiceFirebase>(
-                              context,
-                            ).projects[index].name,
-                        status:
-                            Provider.of<ApiServiceFirebase>(
-                                      context,
-                                    ).projects[index].status.toString() ==
-                                    "0"
-                                ? "In Progress"
-                                : "Completed",
-                        statusColor:
-                            index % 2 == 0 ? Colors.orange : Colors.green,
+                            ).projects[index],
                       );
                     },
                     itemCount:
@@ -92,17 +92,8 @@ class ProjectDashbordScreen extends StatelessWidget {
 }
 
 class ProjectCard extends StatelessWidget {
-  final String title;
-  final String status;
-  final Color statusColor;
-  final String decription;
-  const ProjectCard({
-    super.key,
-    required this.title,
-    required this.status,
-    required this.statusColor,
-    required this.decription,
-  });
+  final ProjectModel projectModel;
+  const ProjectCard({super.key, required this.projectModel});
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +121,7 @@ class ProjectCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  title,
+                  projectModel.name,
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -144,13 +135,15 @@ class ProjectCard extends StatelessWidget {
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: statusColor.withOpacity(0.1),
+                  color: Colors.red,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  status,
+                  projectModel.status.toString() == "0"
+                      ? "in Prograss"
+                      : " Complete ",
                   style: TextStyle(
-                    color: statusColor,
+                    color: Colors.red,
                     fontWeight: FontWeight.bold,
                     fontSize: 12,
                   ),
@@ -161,17 +154,22 @@ class ProjectCard extends StatelessWidget {
           const SizedBox(height: 16),
           // Placeholder text as in the image
           Text(
-            decription,
+            projectModel.description,
             style: TextStyle(fontSize: 14, color: Color(0xFF6B6B6B)),
           ),
           const SizedBox(height: 24),
           Row(
             children: [
-              _buildActionButton(Icons.edit, 'Edit'),
+              _buildActionButton(Icons.edit, 'Edit', context, projectModel),
               const SizedBox(width: 5),
-              _buildActionButton(Icons.delete, 'Delete'),
+              _buildActionButton(Icons.delete, 'Delete', context, projectModel),
               const SizedBox(width: 5),
-              _buildActionButton(Icons.visibility, 'View Details'),
+              _buildActionButton(
+                Icons.visibility,
+                'View Details',
+                context,
+                projectModel,
+              ),
             ],
           ),
         ],
@@ -179,10 +177,24 @@ class ProjectCard extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButton(IconData icon, String label) {
+  Widget _buildActionButton(
+    IconData icon,
+    String label,
+    BuildContext context,
+    ProjectModel project,
+  ) {
     return Expanded(
       child: OutlinedButton(
-        onPressed: () {},
+        onPressed: () {
+          if (label == "Edit") {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return EditProjectDialog(project: project, isEdit: true);
+              },
+            );
+          }
+        },
         style: OutlinedButton.styleFrom(
           foregroundColor: const Color(0xFF6B6B6B),
           side: const BorderSide(color: Color(0xFFE0E0E0)),

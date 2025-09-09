@@ -4,6 +4,7 @@ import 'package:my_profile/notifiers/providers.dart';
 import 'package:my_profile/screen/home/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,6 +12,11 @@ void main() async {
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform, // مهم جداً
+  );
+    await Supabase.initialize(
+    url: 'https://bpcfdupkxxalmryqdkym.supabase.co',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJwY2ZkdXBreHhhbG1yeXFka3ltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU4MTc4MjYsImV4cCI6MjA3MTM5MzgyNn0.vH_iCWdNQ_KC-nHPhhYbX15PgFek8D_JghWojvTidL4',
   );
   runApp(const MyApp());
 }
