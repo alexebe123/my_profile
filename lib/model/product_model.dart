@@ -5,7 +5,7 @@ class ProjectModel {
   String imageUrl = "";
   String linkGithub = "";
   String linkLiveDemo = "";
-  int status = 0; // 0: In Progress, 1: Completed
+  String status = ""; // 0: In Progress, 1: Completed
 
 
   ProjectModel.empty();

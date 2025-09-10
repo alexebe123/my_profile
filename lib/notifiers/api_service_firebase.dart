@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -141,29 +140,28 @@ class ApiServiceFirebase extends ChangeNotifier {
       await firebaseFirestore
           .collection(AppConstant.collectionIdProducts)
           .add(project.toJson());
+      projects.add(project);
     } catch (e) {
       print(e.toString());
     }
   }
 
-  
- Future<String> uploadPhoto(Uint8List bytes) async {
-  final fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+  Future<String> uploadPhoto(Uint8List bytes) async {
+    final fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
 
-  try {
-    await Supabase.instance.client.storage
-        .from('images')
-        .uploadBinary(fileName, bytes);
+    try {
+      await Supabase.instance.client.storage
+          .from('images')
+          .uploadBinary(fileName, bytes);
 
-    final publicUrl = Supabase.instance.client.storage
-        .from('images')
-        .getPublicUrl(fileName);
+      final publicUrl = Supabase.instance.client.storage
+          .from('images')
+          .getPublicUrl(fileName);
 
-    return publicUrl;
-  } catch (e) {
-    print('Upload error: $e');
-    return "";
+      return publicUrl;
+    } catch (e) {
+      print('Upload error: $e');
+      return "";
+    }
   }
-}
-
 }
