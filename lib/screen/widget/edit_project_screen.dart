@@ -34,6 +34,7 @@ class _EditProjectDialogState extends State<EditProjectDialog> {
   // القيمة الافتراضية للحالة // رابط الصورة (يمكنك تعديله حسب الحاجة)
   Uint8List? _imageBytes;
   String imageError = "";
+  bool edit = false;
 
   Future<void> pickImage() async {
     final result = await FilePicker.platform.pickFiles(
@@ -45,8 +46,15 @@ class _EditProjectDialogState extends State<EditProjectDialog> {
       setState(() {
         imageError = "";
         _imageBytes = result.files.single.bytes;
+        edit = false;
       });
     }
+  }
+
+  @override
+  initState() {
+    super.initState();
+    edit = widget.isEdit;
   }
 
   @override
@@ -56,14 +64,7 @@ class _EditProjectDialogState extends State<EditProjectDialog> {
       _projectDescriptionController.text = widget.project.description;
       _projectlinkGithubController.text = widget.project.linkGithub;
       _projectlinkDemoController.text = widget.project.linkLiveDemo;
-      _selectedStatus =
-          widget.project.status == "In Progress"
-              ? "In Progress"
-              : widget.project.status == "Completed"
-              ? "Completed"
-              : widget.project.status == "Pending"
-              ? "Pending"
-              : "Cancelled";
+      _selectedStatus = widget.project.status;
     }
     return Dialog(
       backgroundColor: const Color(0xFF1F222A),
@@ -226,7 +227,9 @@ class _EditProjectDialogState extends State<EditProjectDialog> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child:
-                            (_imageBytes == null)
+                            (edit)
+                                ? Image.network(widget.project.imageUrl)
+                                : (_imageBytes == null)
                                 ? Icon(
                                   Icons.image,
                                   size: 40,
@@ -286,17 +289,25 @@ class _EditProjectDialogState extends State<EditProjectDialog> {
                                   context,
                                   listen: false,
                                 ).uploadPhoto(_imageBytes!);
-                            await Provider.of<ApiServiceFirebase>(
-                              context,
-                              listen: false,
-                            ).addProject(widget.project);
+                            if (widget.isEdit) {
+                              await Provider.of<ApiServiceFirebase>(
+                                context,
+                                listen: false,
+                              ).updateProject(widget.project);
+                            } else {
+                              await Provider.of<ApiServiceFirebase>(
+                                context,
+                                listen: false,
+                              ).addProject(widget.project);
+                            }
+
                             // Logic to save changes
                             Navigator.of(
                               context,
                             ).pop(); // Close dialog after saving
                           }
                         },
-                        child: const Text('Save'),
+                        child: Text((widget.isEdit) ? 'Update' : 'Save'),
                       ),
                     ],
                   ),

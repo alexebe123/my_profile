@@ -171,6 +171,9 @@ class ApiServiceFirebase extends ChangeNotifier {
           .collection(AppConstant.collectionIdProducts)
           .doc(project.id)
           .update(project.toJson());
+      projects.removeWhere((p) => p.id == project.id);
+      projects.add(project);
+      notifyListeners();
     } catch (e) {
       print(e.toString());
     }
