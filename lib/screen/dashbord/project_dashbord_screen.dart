@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_profile/model/product_model.dart';
 import 'package:my_profile/notifiers/api_service_firebase.dart';
 import 'package:my_profile/screen/widget/edit_project_screen.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
 class ProjectDashbordScreen extends StatelessWidget {
@@ -147,13 +148,40 @@ class ProjectCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 5),
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-            child: Image.network(
-              projectModel.imageUrl,
-              height: 160,
-              width: double.infinity,
-              fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (_) => Scaffold(
+                        appBar: AppBar(
+                          backgroundColor: Colors.black,
+                          leading: IconButton(
+                            icon: Icon(Icons.close, color: Colors.white),
+                            onPressed: () {
+                              Navigator.pop(context); // الخروج من صفحة الصورة
+                            },
+                          ),
+                        ),
+                        backgroundColor: Colors.black,
+                        body: PhotoView(
+                          imageProvider: NetworkImage(projectModel.imageUrl),
+                        ),
+                      ),
+                ),
+              );
+            },
+            child: ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(16),
+              ),
+              child: Image.network(
+                projectModel.imageUrl,
+                height: 160,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           const SizedBox(height: 16),
