@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 class ProjectDashbordScreen extends StatelessWidget {
   const ProjectDashbordScreen({super.key});
-  
 
   @override
   Widget build(BuildContext context) {
@@ -60,29 +59,29 @@ class ProjectDashbordScreen extends StatelessWidget {
             ),
             const SizedBox(height: 40),
             // Projects Grid
-            Wrap(
-              spacing: 24,
-              runSpacing: 24,
-              children: [
-                SizedBox(
-                  height: 600,
-                  width: 400,
-                  child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      return ProjectCard(
-                        projectModel:
-                            Provider.of<ApiServiceFirebase>(
-                              context,
-                            ).projects[index],
-                      );
-                    },
-                    itemCount:
+            SizedBox(
+              width: MediaQuery.of(context).size.width - 250,
+              height: MediaQuery.of(context).size.height,
+              child: GridView.builder(
+                shrinkWrap: true, // مهم
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3, // 3 عناصر في كل صف
+                  childAspectRatio: 0.88, // مربع
+                  crossAxisSpacing: 10, // مسافة بين الأعمدة
+                  mainAxisSpacing:
+                      10, // مسافة بين الصفوف// تتحكم في الطول/العرض
+                ),
+                itemBuilder: (context, index) {
+                  return ProjectCard(
+                    projectModel:
                         Provider.of<ApiServiceFirebase>(
                           context,
-                        ).projects.length,
-                  ),
-                ),
-              ],
+                        ).projects[index],
+                  );
+                },
+                itemCount:
+                    Provider.of<ApiServiceFirebase>(context).projects.length,
+              ),
             ),
           ],
         ),
@@ -98,7 +97,6 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 320,
       decoration: BoxDecoration(
         color: const Color.fromARGB(255, 24, 32, 43),
         borderRadius: BorderRadius.circular(20),
@@ -135,13 +133,10 @@ class ProjectCard extends StatelessWidget {
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.red,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  projectModel.status.toString() == "0"
-                      ? "in Prograss"
-                      : " Complete ",
+                  projectModel.status,
                   style: TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.bold,
@@ -151,10 +146,22 @@ class ProjectCard extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: 5),
+          ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+            child: Image.network(
+              projectModel.imageUrl,
+              height: 160,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+          ),
           const SizedBox(height: 16),
           // Placeholder text as in the image
           Text(
             projectModel.description,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(fontSize: 14, color: Color(0xFF6B6B6B)),
           ),
           const SizedBox(height: 24),

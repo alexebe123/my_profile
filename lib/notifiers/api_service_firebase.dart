@@ -164,4 +164,15 @@ class ApiServiceFirebase extends ChangeNotifier {
       return "";
     }
   }
+
+  Future<void> updateProject(ProjectModel project) async {
+    try {
+      await firebaseFirestore
+          .collection(AppConstant.collectionIdProducts)
+          .doc(project.id)
+          .update(project.toJson());
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }
