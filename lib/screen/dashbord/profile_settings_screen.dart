@@ -6,22 +6,21 @@ class ProfileSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D1117),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            constraints: const BoxConstraints(maxWidth: 900),
-            decoration: BoxDecoration(
-              color: const Color(0xFF161B22),
-              borderRadius: BorderRadius.circular(16),
-            ),
+      backgroundColor: const Color(0xFF1E1E2C),
+      body: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 1100),
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: const Color(0xFF2A2D3E),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // العنوان
                 const Text(
-                  "Profile Settings",
+                  "My Profile & Settings",
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -30,268 +29,93 @@ class ProfileSettings extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
 
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // صورة البروفايل + الشهادات
-                    Expanded(
-                      flex: 2,
-                      child: Column(
+                // --- الصورة الشخصية ---
+                Center(
+                  child: Column(
+                    children: [
+                      const CircleAvatar(
+                        radius: 50,
+                        backgroundImage: AssetImage("assets/my_image.jpg"),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // صورة بروفايل
-                          CircleAvatar(
-                            radius: 50,
-                            backgroundColor: Colors.grey.shade800,
-                            child: const Icon(
-                              Icons.camera_alt,
-                              color: Colors.white70,
-                              size: 30,
-                            ),
+                          ElevatedButton(
+                            onPressed: () {},
+                            child: const Text("Upload New Photo"),
                           ),
-                          const SizedBox(height: 20),
-                          // قسم الشهادات
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF0D1117),
-                              borderRadius: BorderRadius.circular(12),
+                          const SizedBox(width: 10),
+                          OutlinedButton(
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: Colors.white,
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "Certifications",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                TextField(
-                                  style: const TextStyle(color: Colors.white),
-                                  decoration: _inputDecoration(
-                                    "Certificate Name",
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: TextField(
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                        decoration: _inputDecoration(
-                                          "Issue Date",
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    ElevatedButton(
-                                      onPressed: () {},
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.grey.shade700,
-                                      ),
-                                      child: const Text("Upload File"),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: TextField(
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                        decoration: _inputDecoration(
-                                          "Expire Date",
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    ElevatedButton(
-                                      onPressed: () {},
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.grey.shade700,
-                                      ),
-                                      child: const Text("Upload File"),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 12),
-                                ElevatedButton(
-                                  onPressed: () {},
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.blue,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                  child: const Text("+ Add New Certificate"),
-                                ),
-                              ],
-                            ),
+                            child: const Text("Remove Photo"),
                           ),
                         ],
                       ),
-                    ),
+                    ],
+                  ),
+                ),
 
-                    const SizedBox(width: 20),
+                const SizedBox(height: 30),
 
-                    // Basic Info + Work Experience
-                    Expanded(
-                      flex: 3,
-                      child: Column(
-                        children: [
-                          // Basic Information
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF0D1117),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "Basic Information",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                TextField(
-                                  style: const TextStyle(color: Colors.white),
-                                  decoration: _inputDecoration("Full Name"),
-                                ),
-                                const SizedBox(height: 10),
-                                TextField(
-                                  style: const TextStyle(color: Colors.white),
-                                  decoration: _inputDecoration("Email Address"),
-                                ),
-                                const SizedBox(height: 10),
-                                TextField(
-                                  style: const TextStyle(color: Colors.white),
-                                  decoration: _inputDecoration("Job Title"),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          // Work Experience
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF0D1117),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "Work Experience",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: TextField(
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                        decoration: _inputDecoration(
-                                          "Company Name",
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    Expanded(
-                                      child: TextField(
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                        decoration: _inputDecoration(
-                                          "Job Date",
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 10),
-                                TextField(
-                                  style: const TextStyle(color: Colors.white),
-                                  decoration: _inputDecoration("Job Title"),
-                                ),
-                                const SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: TextField(
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                        decoration: _inputDecoration(
-                                          "Dates (From - To)",
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    ElevatedButton(
-                                      onPressed: () {},
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.grey.shade700,
-                                      ),
-                                      child: const Text("Upload File"),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 10),
-                                TextField(
-                                  maxLines: 3,
-                                  style: const TextStyle(color: Colors.white),
-                                  decoration: _inputDecoration(
-                                    "Responsibilities / Achievements",
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                // --- Responsive Grid ---
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    int crossAxisCount = 1; // default موبايل
+                    if (constraints.maxWidth > 900) {
+                      crossAxisCount = 3; // ديسكتوب
+                    } else if (constraints.maxWidth > 600) {
+                      crossAxisCount = 2; // تابلت
+                    }
+
+                    return GridView.count(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      crossAxisCount: crossAxisCount,
+                      crossAxisSpacing: 15,
+                      mainAxisSpacing: 15,
+                      childAspectRatio: 1.3,
+                      children: [
+                        buildCard("Basic Information", [
+                          "Full Name: Name",
+                          "Email: user.email@example.com",
+                        ]),
+                        buildCard("Work Experience", [
+                          "Senior Flutter Developer (2022-Present)",
+                          "Full Name Company",
+                        ]),
+                        buildCard("Certifications", [
+                          "Flutter 2023",
+                          "Firebase",
+                          "UI/UX Design",
+                        ]),
+                        buildCard("Skills", ["Flutter", "Dart", "UI/UX"]),
+                      ],
+                    );
+                  },
                 ),
 
                 const SizedBox(height: 20),
+
+                // --- الأزرار النهائية ---
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(
-                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 14,
-                        ),
                       ),
+                      onPressed: () {},
                       child: const Text("Save Changes"),
                     ),
                     const SizedBox(width: 10),
-                    ElevatedButton(
+                    OutlinedButton(
                       onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey.shade800,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 14,
-                        ),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.white,
                       ),
                       child: const Text("Cancel"),
                     ),
@@ -305,18 +129,60 @@ class ProfileSettings extends StatelessWidget {
     );
   }
 
-  // Decoration InputFields
-  InputDecoration _inputDecoration(String hint) {
-    return InputDecoration(
-      hintText: hint,
-      hintStyle: const TextStyle(color: Colors.white54),
-      filled: true,
-      fillColor: const Color(0xFF161B22),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide.none,
+  Widget buildCard(String title, List<String> items) {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: const Color(0xFF1E1E2C),
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: Colors.blueGrey),
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 10),
+          for (var item in items)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    item,
+                    style: const TextStyle(color: Colors.white70),
+                  ),
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.edit,
+                        color: Colors.blue,
+                        size: 20,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                        size: 20,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+        ],
+      ),
     );
   }
 }
