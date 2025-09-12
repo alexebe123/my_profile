@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_profile/model/education_history_model.dart';
 import 'package:my_profile/notifiers/api_service_firebase.dart';
 import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/screen/home/about_screen.dart';
@@ -7,6 +8,7 @@ import 'package:my_profile/screen/home/contact_me_screen.dart';
 import 'package:my_profile/screen/dashbord/dashbord_screen.dart';
 import 'package:my_profile/screen/home/info_screen.dart';
 import 'package:my_profile/screen/home/project_screen.dart';
+import 'package:my_profile/screen/widget/edit_info_card_education.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -392,18 +394,14 @@ class InfoCardExperienceWidget extends StatelessWidget {
 }
 
 class InfoCardEducationWidget extends StatelessWidget {
-  final String _educationInstitution;
-  final String _educationCompany;
-  final String _educationYear;
+  final bool isEdit;
+  final EducationHistoryModel editEducationHistoryModel;
 
-  const InfoCardEducationWidget({
+  InfoCardEducationWidget({
     super.key,
-    required String educationInstitution,
-    required String educationCompany,
-    required String educationYear,
-  }) : _educationInstitution = educationInstitution,
-       _educationCompany = educationCompany,
-       _educationYear = educationYear;
+    required this.isEdit,
+    required this.editEducationHistoryModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -421,7 +419,7 @@ class InfoCardEducationWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                _educationInstitution,
+                editEducationHistoryModel.degree,
                 style: TextStyle(
                   color: AppConstant.nameYellow,
                   fontWeight: FontWeight.w700,
@@ -431,16 +429,43 @@ class InfoCardEducationWidget extends StatelessWidget {
               SizedBox(
                 width: 400,
                 child: Text(
-                  _educationCompany,
+                  editEducationHistoryModel.description,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Colors.white70),
                 ),
               ),
               SizedBox(height: 6),
-              Text(_educationYear, style: TextStyle(color: Colors.redAccent)),
+              Text(
+                "${editEducationHistoryModel.startDate} - ${editEducationHistoryModel.endDate}",
+                style: TextStyle(color: Colors.redAccent),
+              ),
               SizedBox(height: 14),
             ],
           ),
+          (isEdit)
+              ? Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return EditInfoCardEducation(
+                            isEdit: isEdit,
+                            educationHistoryModel: editEducationHistoryModel,
+                          );
+                        },
+                      );
+                    },
+                    icon: const Icon(Icons.edit, color: Colors.blue, size: 20),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.delete, color: Colors.red, size: 20),
+                  ),
+                ],
+              )
+              : SizedBox(),
         ],
       ),
     );

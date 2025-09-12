@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:my_profile/model/education_history_model.dart';
 import 'package:my_profile/notifiers/api_service_firebase.dart';
 import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/screen/home/home_screen.dart';
+import 'package:my_profile/screen/widget/edit_info_card_education.dart';
 import 'package:provider/provider.dart';
 
-Widget infoCardEducation(BuildContext context) {
+Widget infoCardEducation(BuildContext context, bool isEdit) {
   return Container(
     padding: const EdgeInsets.all(18),
     decoration: BoxDecoration(
@@ -17,13 +19,48 @@ Widget infoCardEducation(BuildContext context) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          '🎓 Education History',
-          style: TextStyle(
-            color: AppConstant.accentBlue,
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              '🎓 Education History',
+              style: TextStyle(
+                color: AppConstant.accentBlue,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            (isEdit)
+                ? ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return EditInfoCardEducation(
+                          isEdit: false,
+                          educationHistoryModel: EducationHistoryModel.empty(),
+                        );
+                      },
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF333333),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 16,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Text(
+                    'Create New Project',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                )
+                : SizedBox(),
+          ],
         ),
         SizedBox(height: 12),
         Divider(color: Colors.black45),
@@ -33,25 +70,17 @@ Widget infoCardEducation(BuildContext context) {
           height: 200,
           width: double.infinity,
           child: ListView.builder(
-            itemCount: Provider.of<ApiServiceFirebase>(context).educationHistory.length,
+            itemCount:
+                Provider.of<ApiServiceFirebase>(
+                  context,
+                ).educationHistory.length,
             itemBuilder: (context, index) {
               return InfoCardEducationWidget(
-                educationInstitution:
+                isEdit: isEdit,
+                editEducationHistoryModel:
                     Provider.of<ApiServiceFirebase>(
                       context,
-                    ).educationHistory[index].degree,
-                educationCompany:
-                    Provider.of<ApiServiceFirebase>(
-                      context,
-                    ).educationHistory[index].description,
-                educationYear:
-                    Provider.of<ApiServiceFirebase>(
-                      context,
-                    ).educationHistory[index].startDate +
-                    " - " +
-                    Provider.of<ApiServiceFirebase>(
-                      context,
-                    ).educationHistory[index].endDate,
+                    ).educationHistory[index],
               );
             },
           ),

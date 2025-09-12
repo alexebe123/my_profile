@@ -9,6 +9,9 @@ class EducationHistoryModel {
 
   EducationHistoryModel.fromMap(Map<String, dynamic> json) {
     try {
+      id = json['\$id'];
+    } catch (e) {}
+    try {
       degree = json['degree'];
     } catch (e) {}
     try {

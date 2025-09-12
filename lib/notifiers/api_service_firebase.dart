@@ -178,4 +178,34 @@ class ApiServiceFirebase extends ChangeNotifier {
       print(e.toString());
     }
   }
+
+  Future<void> addEducationHistory(
+    EducationHistoryModel educationHistoryModel,
+  ) async {
+    try {
+      await firebaseFirestore
+          .collection(AppConstant.collectionIdEducationHistory)
+          .add(educationHistoryModel.toJson());
+      educationHistory.add(educationHistoryModel);
+      notifyListeners();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> updateEducationHistory(
+    EducationHistoryModel educationHistoryModel,
+  ) async {
+    try {
+      await firebaseFirestore
+          .collection(AppConstant.collectionIdEducationHistory)
+          .doc(educationHistoryModel.id)
+          .update(educationHistoryModel.toJson());
+      educationHistory.removeWhere((p) => p.id == educationHistoryModel.id);
+      educationHistory.add(educationHistoryModel);
+      notifyListeners();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }
