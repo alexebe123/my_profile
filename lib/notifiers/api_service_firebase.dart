@@ -141,6 +141,7 @@ class ApiServiceFirebase extends ChangeNotifier {
           .collection(AppConstant.collectionIdProducts)
           .add(project.toJson());
       projects.add(project);
+      notifyListeners();
     } catch (e) {
       print(e.toString());
     }
@@ -209,13 +210,26 @@ class ApiServiceFirebase extends ChangeNotifier {
     }
   }
 
-  Future<void> deletEducationHistory(String id) async {
+  Future<void> deleteEducationHistory(String id) async {
     try {
       await firebaseFirestore
           .collection(AppConstant.collectionIdEducationHistory)
           .doc(id)
           .delete();
       educationHistory.removeWhere((p) => p.id == id);
+      notifyListeners();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> deleteProjectHistory(String id) async {
+    try {
+      await firebaseFirestore
+          .collection(AppConstant.collectionIdProducts)
+          .doc(id)
+          .delete();
+      projects.removeWhere((p) => p.id == id);
       notifyListeners();
     } catch (e) {
       print(e.toString());

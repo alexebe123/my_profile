@@ -123,6 +123,7 @@ class ProjectCard extends StatelessWidget {
                   projectModel.name,
                   style: const TextStyle(
                     fontSize: 24,
+                    overflow: TextOverflow.ellipsis,
                     fontWeight: FontWeight.bold,
                     color: Colors.white70,
                   ),
@@ -198,13 +199,6 @@ class ProjectCard extends StatelessWidget {
               _buildActionButton(Icons.edit, 'Edit', context, projectModel),
               const SizedBox(width: 5),
               _buildActionButton(Icons.delete, 'Delete', context, projectModel),
-              const SizedBox(width: 5),
-              _buildActionButton(
-                Icons.visibility,
-                'View Details',
-                context,
-                projectModel,
-              ),
             ],
           ),
         ],
@@ -220,7 +214,7 @@ class ProjectCard extends StatelessWidget {
   ) {
     return Expanded(
       child: OutlinedButton(
-        onPressed: () {
+        onPressed: () async {
           if (label == "Edit") {
             showDialog(
               context: context,
@@ -228,6 +222,11 @@ class ProjectCard extends StatelessWidget {
                 return EditProjectDialog(project: project, isEdit: true);
               },
             );
+          } else {
+            await Provider.of<ApiServiceFirebase>(
+              context,
+              listen: false,
+            ).deleteProjectHistory(project.id);
           }
         },
         style: OutlinedButton.styleFrom(

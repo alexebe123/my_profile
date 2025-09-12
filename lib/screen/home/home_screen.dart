@@ -464,7 +464,7 @@ class InfoCardEducationWidget extends StatelessWidget {
                       await Provider.of<ApiServiceFirebase>(
                         context,
                         listen: false,
-                      ).deletEducationHistory(editEducationHistoryModel.id);
+                      ).deleteEducationHistory(editEducationHistoryModel.id);
                     },
                     icon: const Icon(Icons.delete, color: Colors.red, size: 20),
                   ),
