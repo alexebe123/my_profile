@@ -460,7 +460,12 @@ class InfoCardEducationWidget extends StatelessWidget {
                     icon: const Icon(Icons.edit, color: Colors.blue, size: 20),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await Provider.of<ApiServiceFirebase>(
+                        context,
+                        listen: false,
+                      ).deletEducationHistory(editEducationHistoryModel.id);
+                    },
                     icon: const Icon(Icons.delete, color: Colors.red, size: 20),
                   ),
                 ],

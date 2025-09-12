@@ -208,4 +208,17 @@ class ApiServiceFirebase extends ChangeNotifier {
       print(e.toString());
     }
   }
+
+  Future<void> deletEducationHistory(String id) async {
+    try {
+      await firebaseFirestore
+          .collection(AppConstant.collectionIdEducationHistory)
+          .doc(id)
+          .delete();
+      educationHistory.removeWhere((p) => p.id == id);
+      notifyListeners();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }
