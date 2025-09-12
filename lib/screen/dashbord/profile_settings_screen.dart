@@ -55,7 +55,7 @@ class ProfileSettings extends StatelessWidget {
                 const SizedBox(height: 30),
                 // --- Responsive Grid ---
                 infoCardEducation(context,true),
-                infoCardExperience(context),
+                infoCardExperience(context,true),
               ],
             ),
           ),

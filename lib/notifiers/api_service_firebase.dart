@@ -235,4 +235,47 @@ class ApiServiceFirebase extends ChangeNotifier {
       print(e.toString());
     }
   }
+
+  Future<void> deleteExperienceHistory(String id) async {
+    try {
+      await firebaseFirestore
+          .collection(AppConstant.collectionIdExperienceHistory)
+          .doc(id)
+          .delete();
+      experienceHistory.removeWhere((p) => p.id == id);
+      notifyListeners();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> updateExperienceHistory(
+    ExperienceHistoryModel experienceHistoryModel,
+  ) async {
+    try {
+      await firebaseFirestore
+          .collection(AppConstant.collectionIdExperienceHistory)
+          .doc(experienceHistoryModel.id)
+          .update(experienceHistoryModel.toJson());
+      experienceHistory.removeWhere((p) => p.id == experienceHistoryModel.id);
+      experienceHistory.add(experienceHistoryModel);
+      notifyListeners();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> addExperienceHistory(
+    ExperienceHistoryModel experienceHistoryModel,
+  ) async {
+    try {
+      await firebaseFirestore
+          .collection(AppConstant.collectionIdExperienceHistory)
+          .add(experienceHistoryModel.toJson());
+      experienceHistory.add(experienceHistoryModel);
+      notifyListeners();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }

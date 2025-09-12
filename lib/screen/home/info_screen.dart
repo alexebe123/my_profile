@@ -141,14 +141,14 @@ class InfoScreen extends StatelessWidget {
               children: [
                 Expanded(child: infoCardEducation(context,false)),
                 const SizedBox(width: 18),
-                Expanded(child: infoCardExperience(context)),
+                Expanded(child: infoCardExperience(context,false)),
               ],
             )
             : Column(
               children: [
                 infoCardEducation(context,false),
                 const SizedBox(height: 12),
-                infoCardExperience(context),
+                infoCardExperience(context,false),
               ],
             ),
         const SizedBox(height: 40),

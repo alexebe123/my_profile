@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_profile/model/education_history_model.dart';
+import 'package:my_profile/model/experience_history_model.dart';
 import 'package:my_profile/notifiers/api_service_firebase.dart';
 import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/screen/home/about_screen.dart';
@@ -8,6 +9,7 @@ import 'package:my_profile/screen/home/contact_me_screen.dart';
 import 'package:my_profile/screen/dashbord/dashbord_screen.dart';
 import 'package:my_profile/screen/home/info_screen.dart';
 import 'package:my_profile/screen/home/project_screen.dart';
+import 'package:my_profile/screen/widget/edit_experience_card.dart';
 import 'package:my_profile/screen/widget/edit_info_card_education.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -347,17 +349,13 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class InfoCardExperienceWidget extends StatelessWidget {
-  const InfoCardExperienceWidget({
+  InfoCardExperienceWidget({
     super.key,
-    required this.name,
-    required this.jobStyle,
-    required this.job,
-    required this.duration,
+    required this.experienceHistoryModel,
+    required this.isEdit,
   });
-  final String name;
-  final String jobStyle;
-  final String job;
-  final String duration;
+  ExperienceHistoryModel experienceHistoryModel;
+  bool isEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -373,21 +371,62 @@ class InfoCardExperienceWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              name,
+              experienceHistoryModel.title,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: AppConstant.nameYellow,
                 fontWeight: FontWeight.w700,
               ),
             ),
             SizedBox(height: 6),
-            Text(jobStyle, style: TextStyle(color: Colors.white70)),
+            Text(
+              experienceHistoryModel.jobStyle,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: Colors.white70),
+            ),
             SizedBox(height: 6),
-            Text(job, style: TextStyle(color: Colors.white70)),
+            Text(
+              experienceHistoryModel.jobTech,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: Colors.white70),
+            ),
             SizedBox(height: 6),
-            Text(duration, style: TextStyle(color: Colors.redAccent)),
+            Text(
+              "${experienceHistoryModel.startDate} - ${experienceHistoryModel.endDate}",
+              style: TextStyle(color: Colors.redAccent),
+            ),
             SizedBox(height: 14),
           ],
         ),
+        (isEdit)
+            ? Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return EditExperienceCard(
+                          isEdit: isEdit,
+                          experienceHistoryModel: experienceHistoryModel,
+                        );
+                      },
+                    );
+                  },
+                  icon: const Icon(Icons.edit, color: Colors.blue, size: 20),
+                ),
+                IconButton(
+                  onPressed: () async {
+                    await Provider.of<ApiServiceFirebase>(
+                      context,
+                      listen: false,
+                    ).deleteExperienceHistory(experienceHistoryModel.id);
+                  },
+                  icon: const Icon(Icons.delete, color: Colors.red, size: 20),
+                ),
+              ],
+            )
+            : SizedBox(),
       ],
     );
   }

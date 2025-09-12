@@ -10,7 +10,7 @@ class ExperienceHistoryModel {
 
   ExperienceHistoryModel.fromJson(Map<String, dynamic> json) {
     try {
-      id = json['id'];
+      id = json['\$id'];
     } catch (e) {}
     try {
       title = json['title'];
