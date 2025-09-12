@@ -278,4 +278,17 @@ class ApiServiceFirebase extends ChangeNotifier {
       print(e.toString());
     }
   }
+
+  Future<void> updateProfile(ProfileModel profile) async {
+    try {
+      await firebaseFirestore
+          .collection(AppConstant.collectionIdUsers)
+          .doc(profile.id)
+          .update(profile.toJson());
+      profileModel = profile;
+      notifyListeners();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }

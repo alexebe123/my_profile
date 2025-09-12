@@ -27,7 +27,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     const DashbordInfoScreen(),
     const ProjectDashbordScreen(),
     const AnalyzeScreen(),
-    const ProfileSettings(),
+     ProfileSettings(),
   ];
 
   @override

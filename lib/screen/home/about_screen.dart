@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_profile/notifiers/api_service_firebase.dart';
 import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/screen/home/home_screen.dart';
+import 'package:provider/provider.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -21,7 +23,10 @@ class AboutScreen extends StatelessWidget {
         CircleAvatar(
           radius: 60,
           backgroundImage: NetworkImage(
-            AppConstant.profileImage, // ضع رابط صورتك هنا
+            Provider.of<ApiServiceFirebase>(
+              context,
+              listen: false,
+            ).profileModel.imageUrl, // ضع رابط صورتك هنا
           ),
         ),
         SizedBox(height: 16),
