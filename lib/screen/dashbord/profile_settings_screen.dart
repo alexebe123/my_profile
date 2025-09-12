@@ -6,7 +6,6 @@ class ProfileSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1E1E2C),
       body: Center(
         child: Container(
           constraints: const BoxConstraints(maxWidth: 1100),
@@ -17,7 +16,7 @@ class ProfileSettings extends StatelessWidget {
           ),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text(
                   "My Profile & Settings",
