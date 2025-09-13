@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:my_profile/model/product_model.dart';
 import 'package:my_profile/notifiers/api_service_firebase.dart';
 import 'package:my_profile/res/app_constant.dart';
 import 'package:provider/provider.dart';
@@ -84,23 +85,31 @@ class _RecentProjects extends StatelessWidget {
             ),
             const Divider(color: Colors.white12, height: 24),
             // Project items
-            _ProjectRow(
-              project: 'Portfolio Website',
-              date: 'Apr 10, 2023',
-              status: 'Completed',
-              statusColor: Colors.green,
-            ),
-            _ProjectRow(
-              project: 'E-commerce Platform',
-              date: 'Mar 22, 2023',
-              status: 'Ongoing',
-              statusColor: Colors.blue,
-            ),
-            _ProjectRow(
-              project: 'Chat Application',
-              date: 'Feb 15, 2023',
-              status: 'Ongoing',
-              statusColor: Colors.blue,
+            SizedBox(
+              width: 400,
+              height: 200,
+              child: ListView.builder(
+                itemCount:
+                    Provider.of<ApiServiceFirebase>(context).projects.length,
+                itemBuilder: (context, index) {
+                  return _ProjectRow(
+                    project:
+                        Provider.of<ApiServiceFirebase>(
+                          context,
+                        ).projects[index].name,
+                    date: 'Apr 10, 2023',
+                    status:
+                        Provider.of<ApiServiceFirebase>(
+                          context,
+                        ).projects[index].status,
+                    statusColor: ProjectModel.getStatusColor(
+                      Provider.of<ApiServiceFirebase>(
+                        context,
+                      ).projects[index].status,
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),

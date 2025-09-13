@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class ProjectModel {
   String id = "";
   String name = "";
@@ -8,6 +10,20 @@ class ProjectModel {
   String status = "";
   String type = "";
 
+static Color getStatusColor(String status) {
+    switch (status) {
+      case 'In Progress':
+        return Colors.blue; // أزرق للمشاريع اللي راهي جارية
+      case 'Completed':
+        return Colors.green; // أخضر للمشاريع اللي كملت
+      case 'Pending':
+        return Colors.orange; // برتقالي للمشاريع المعلقة
+      case 'Cancelled':
+        return Colors.red; // أحمر للمشاريع الملغية
+      default:
+        return Colors.grey; // لون افتراضي لو ما تطابق حتى حالة
+    }
+  }
 
 
   ProjectModel.empty();
