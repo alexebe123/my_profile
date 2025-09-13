@@ -36,6 +36,7 @@ class _EditProjectDialogState extends State<EditProjectDialog> {
   Uint8List? _imageBytes;
   String imageError = "";
   bool edit = false;
+  bool image = true;
 
   Future<void> pickImage() async {
     final result = await FilePicker.platform.pickFiles(
@@ -45,6 +46,7 @@ class _EditProjectDialogState extends State<EditProjectDialog> {
 
     if (result != null && result.files.single.bytes != null) {
       setState(() {
+        image = false;
         imageError = "";
         _imageBytes = result.files.single.bytes;
         edit = false;
@@ -187,9 +189,7 @@ class _EditProjectDialogState extends State<EditProjectDialog> {
                   const SizedBox(height: 8),
                   DropdownButtonFormField<String>(
                     value: _selectedType,
-                    dropdownColor: const Color(
-                      0xFF1F222A,
-                    ), // لون خلفية قائمة الخيارات
+                    dropdownColor: const Color(0xFF1F222A),
                     style: const TextStyle(color: Colors.white70),
                     decoration: const InputDecoration(hintText: 'Select Type'),
                     items:
@@ -207,6 +207,7 @@ class _EditProjectDialogState extends State<EditProjectDialog> {
                       _selectedType = newValue;
                     },
                   ),
+
                   const SizedBox(height: 24),
 
                   // وصف المشروع
@@ -295,7 +296,7 @@ class _EditProjectDialogState extends State<EditProjectDialog> {
                       ElevatedButton(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            if (_imageBytes == null) {
+                            if (_imageBytes == null && !image) {
                               setState(() {
                                 imageError = "Error";
                               });
@@ -310,11 +311,15 @@ class _EditProjectDialogState extends State<EditProjectDialog> {
                                 _projectlinkDemoController.text;
                             widget.project.status = _selectedStatus!;
                             widget.project.type = _selectedType!;
-                            widget.project.imageUrl =
-                                await Provider.of<ApiServiceFirebase>(
-                                  context,
-                                  listen: false,
-                                ).uploadPhoto(_imageBytes!);
+                            widget.project;
+                            if (_imageBytes != null) {
+                              widget.project.imageUrl =
+                                  await Provider.of<ApiServiceFirebase>(
+                                    context,
+                                    listen: false,
+                                  ).uploadPhoto(_imageBytes!);
+                            }
+
                             if (widget.isEdit) {
                               await Provider.of<ApiServiceFirebase>(
                                 context,

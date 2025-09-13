@@ -196,9 +196,23 @@ class ProjectCard extends StatelessWidget {
           const SizedBox(height: 24),
           Row(
             children: [
-              _buildActionButton(Icons.edit, 'Edit', context, projectModel),
+              Expanded(
+                child: _buildActionButton(
+                  Icons.edit,
+                  'Edit',
+                  context,
+                  projectModel,
+                ),
+              ),
               const SizedBox(width: 5),
-              _buildActionButton(Icons.delete, 'Delete', context, projectModel),
+              Expanded(
+                child: _buildActionButton(
+                  Icons.delete,
+                  'Delete',
+                  context,
+                  projectModel,
+                ),
+              ),
             ],
           ),
         ],
@@ -212,39 +226,35 @@ class ProjectCard extends StatelessWidget {
     BuildContext context,
     ProjectModel project,
   ) {
-    return Expanded(
-      child: OutlinedButton(
-        onPressed: () async {
-          if (label == "Edit") {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return EditProjectDialog(project: project, isEdit: true);
-              },
-            );
-          } else {
-            await Provider.of<ApiServiceFirebase>(
-              context,
-              listen: false,
-            ).deleteProjectHistory(project.id);
-          }
-        },
-        style: OutlinedButton.styleFrom(
-          foregroundColor: const Color(0xFF6B6B6B),
-          side: const BorderSide(color: Color(0xFFE0E0E0)),
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 14),
-            const SizedBox(width: 6),
-            Text(label, style: const TextStyle(fontSize: 12)),
-          ],
-        ),
+    return OutlinedButton(
+      onPressed: () async {
+        if (label == "Edit") {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return EditProjectDialog(project: project, isEdit: true);
+            },
+          );
+        } else {
+          await Provider.of<ApiServiceFirebase>(
+            context,
+            listen: false,
+          ).deleteProjectHistory(project.id);
+        }
+      },
+      style: OutlinedButton.styleFrom(
+        foregroundColor: const Color(0xFF6B6B6B),
+        side: const BorderSide(color: Color(0xFFE0E0E0)),
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 14),
+          const SizedBox(width: 6),
+          Text(label, style: const TextStyle(fontSize: 12)),
+        ],
       ),
     );
   }
