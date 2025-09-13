@@ -1,13 +1,12 @@
 class TechStack {
-  String id = "";
   String name = "";
+  TechStack({
+    required this.name
+  });
 
   TechStack.empty();
 
   TechStack.fromJson(Map<String, dynamic> json) {
-    try {
-      id = json['\$id'];
-    } catch (e) {}
     try {
       name = json['name'];
     } catch (e) {}

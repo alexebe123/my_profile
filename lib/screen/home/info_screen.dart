@@ -9,6 +9,36 @@ import 'package:provider/provider.dart';
 
 class InfoScreen extends StatelessWidget {
   const InfoScreen({super.key});
+  IconData Teck(String name) {
+    switch (name.toLowerCase()) {
+      case "flutter":
+        return FontAwesomeIcons.flutter; // أيقونة موبايل
+      case "dart":
+        return FontAwesomeIcons.code; // أيقونة كود
+      case "php":
+        return FontAwesomeIcons.php;
+      case "python":
+        return FontAwesomeIcons.python;
+      case "javascript":
+        return FontAwesomeIcons.js;
+      case "java":
+        return FontAwesomeIcons.java;
+      case "swift":
+        return FontAwesomeIcons.swift;
+      case "kotlin":
+        return FontAwesomeIcons.k;
+      case "html":
+        return FontAwesomeIcons.html5;
+      case "css":
+        return FontAwesomeIcons.css3;
+      case "react":
+        return FontAwesomeIcons.react;
+      case "nodejs":
+        return FontAwesomeIcons.nodeJs;
+      default:
+        return FontAwesomeIcons.question; // أيقونة افتراضية
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +138,7 @@ class InfoScreen extends StatelessWidget {
         const SizedBox(height: 26),
 
         // Tech Stack row
-        Text(
+        const Text(
           '⚡ Tech Stack',
           style: TextStyle(
             color: AppConstant.accentBlue,
@@ -118,18 +148,33 @@ class InfoScreen extends StatelessWidget {
         ),
         Divider(color: Colors.black45),
         const SizedBox(height: 12),
-        Wrap(
-          spacing: 12,
-          runSpacing: 12,
-          children: [
-            HomeScreen.techCircle(FontAwesomeIcons.bootstrap),
-            HomeScreen.techCircle(FontAwesomeIcons.wordpress),
-            HomeScreen.techCircle(FontAwesomeIcons.js),
-            HomeScreen.techCircle(FontAwesomeIcons.react),
-            HomeScreen.techCircle(FontAwesomeIcons.nodeJs),
-            HomeScreen.techCircle(FontAwesomeIcons.database),
-            HomeScreen.techCircle(FontAwesomeIcons.ethereum),
-          ],
+        Container(
+          alignment: Alignment.center,
+          height: 50,
+          width: 700,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal, // 👈 يضمن أنها عمودية
+            itemCount:
+                Provider.of<ApiServiceFirebase>(
+                  context,
+                ).profileModel.techStack.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return Row(
+                children: [
+                  HomeScreen.techCircle(
+                    Teck(
+                      Provider.of<ApiServiceFirebase>(
+                        context,
+                      ).profileModel.techStack[index].name,
+                    ),
+                  ),
+                  SizedBox(width: 6),
+                ],
+              );
+            },
+          ),
         ),
 
         const SizedBox(height: 28),
@@ -139,16 +184,16 @@ class InfoScreen extends StatelessWidget {
             ? Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(child: infoCardEducation(context,false)),
+                Expanded(child: infoCardEducation(context, false)),
                 const SizedBox(width: 18),
-                Expanded(child: infoCardExperience(context,false)),
+                Expanded(child: infoCardExperience(context, false)),
               ],
             )
             : Column(
               children: [
-                infoCardEducation(context,false),
+                infoCardEducation(context, false),
                 const SizedBox(height: 12),
-                infoCardExperience(context,false),
+                infoCardExperience(context, false),
               ],
             ),
         const SizedBox(height: 40),

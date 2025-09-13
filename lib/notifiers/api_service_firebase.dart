@@ -28,6 +28,8 @@ class ApiServiceFirebase extends ChangeNotifier {
   List<ExperienceHistoryModel> experienceHistory = [];
 
   ApiServiceFirebase._internal();
+  
+  
 
   // Your API methods go here
   Future<void> getUsersData() async {

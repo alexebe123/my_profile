@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:my_profile/model/tech_stack_model.dart';
 import 'package:my_profile/notifiers/api_service_firebase.dart';
 import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/screen/widget/info_card_education.dart';
@@ -45,6 +46,17 @@ class _ProfileSettingsState extends State<ProfileSettings> {
   ];
 
   List<String> selectedLanguages = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    selectedLanguages =
+        Provider.of<ApiServiceFirebase>(
+          context,
+          listen: false,
+        ).profileModel.techStack.map((e) => e.name).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -314,9 +326,35 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                       ),
                                       backgroundColor: Colors.blue,
                                     ),
-                                    onPressed: () {
+                                    onPressed: () async {
                                       // Save logic
-                                      print("Saved: $selectedLanguages");
+                                      if (selectedLanguages.isNotEmpty) {
+                                        final profile =
+                                            Provider.of<ApiServiceFirebase>(
+                                              context,
+                                              listen: false,
+                                            ).profileModel;
+                                        profile.techStack.clear();
+                                        try {
+                                          for (
+                                            var i = 0;
+                                            i < selectedLanguages.length;
+                                            i++
+                                          ) {
+                                            profile.techStack.add(
+                                              TechStack(
+                                                name: selectedLanguages[i],
+                                              ),
+                                            );
+                                          }
+                                          await Provider.of<ApiServiceFirebase>(
+                                            context,
+                                            listen: false,
+                                          ).updateProfile(profile);
+                                        } catch (e) {
+                                          print(e.toString());
+                                        }
+                                      }
                                     },
                                     child: Text("Save"),
                                   ),
