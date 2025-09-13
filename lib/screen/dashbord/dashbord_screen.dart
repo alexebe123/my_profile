@@ -24,10 +24,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   final PageController _pageController = PageController();
   final List<Widget> _pages = [
+    ProfileSettings(),
     const DashbordInfoScreen(),
     const ProjectDashbordScreen(),
     const AnalyzeScreen(),
-     ProfileSettings(),
   ];
 
   @override
