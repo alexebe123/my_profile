@@ -31,6 +31,7 @@ class _EditProjectDialogState extends State<EditProjectDialog> {
       TextEditingController(text: "");
 
   String? _selectedStatus = "In Progress";
+  String? _selectedType = "Mobile";
   // القيمة الافتراضية للحالة // رابط الصورة (يمكنك تعديله حسب الحاجة)
   Uint8List? _imageBytes;
   String imageError = "";
@@ -65,6 +66,7 @@ class _EditProjectDialogState extends State<EditProjectDialog> {
       _projectlinkGithubController.text = widget.project.linkGithub;
       _projectlinkDemoController.text = widget.project.linkLiveDemo;
       _selectedStatus = widget.project.status;
+      _selectedType = widget.project.type;
     }
     return Dialog(
       backgroundColor: const Color(0xFF1F222A),
@@ -182,6 +184,29 @@ class _EditProjectDialogState extends State<EditProjectDialog> {
                       _selectedStatus = newValue;
                     },
                   ),
+                  const SizedBox(height: 8),
+                  DropdownButtonFormField<String>(
+                    value: _selectedType,
+                    dropdownColor: const Color(
+                      0xFF1F222A,
+                    ), // لون خلفية قائمة الخيارات
+                    style: const TextStyle(color: Colors.white70),
+                    decoration: const InputDecoration(hintText: 'Select Type'),
+                    items:
+                        <String>[
+                          'web',
+                          'Mobile',
+                          'Desktop',
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                    onChanged: (String? newValue) {
+                      _selectedType = newValue;
+                    },
+                  ),
                   const SizedBox(height: 24),
 
                   // وصف المشروع
@@ -284,6 +309,7 @@ class _EditProjectDialogState extends State<EditProjectDialog> {
                             widget.project.linkLiveDemo =
                                 _projectlinkDemoController.text;
                             widget.project.status = _selectedStatus!;
+                            widget.project.type = _selectedType!;
                             widget.project.imageUrl =
                                 await Provider.of<ApiServiceFirebase>(
                                   context,

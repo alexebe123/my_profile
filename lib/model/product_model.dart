@@ -5,7 +5,9 @@ class ProjectModel {
   String imageUrl = "";
   String linkGithub = "";
   String linkLiveDemo = "";
-  String status = ""; // 0: In Progress, 1: Completed
+  String status = "";
+  String type = "";
+
 
 
   ProjectModel.empty();
@@ -32,6 +34,9 @@ class ProjectModel {
     try {
       status = json['status'];
     } catch (e) {}
+    try {
+      type = json['type'];
+    } catch (e) {}
   }
 
   Map<String, dynamic> toJson() {
@@ -53,6 +58,9 @@ class ProjectModel {
     } catch (e) {}
     try {
       data['status'] = status;
+    } catch (e) {}
+    try {
+      data['type'] = type;
     } catch (e) {}
     return data;
   }

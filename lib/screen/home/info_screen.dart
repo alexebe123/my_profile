@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_profile/model/tech_stack_model.dart';
 import 'package:my_profile/notifiers/api_service_firebase.dart';
 import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/screen/home/home_screen.dart';
@@ -9,36 +9,6 @@ import 'package:provider/provider.dart';
 
 class InfoScreen extends StatelessWidget {
   const InfoScreen({super.key});
-  IconData Teck(String name) {
-    switch (name.toLowerCase()) {
-      case "flutter":
-        return FontAwesomeIcons.flutter; // أيقونة موبايل
-      case "dart":
-        return FontAwesomeIcons.code; // أيقونة كود
-      case "php":
-        return FontAwesomeIcons.php;
-      case "python":
-        return FontAwesomeIcons.python;
-      case "javascript":
-        return FontAwesomeIcons.js;
-      case "java":
-        return FontAwesomeIcons.java;
-      case "swift":
-        return FontAwesomeIcons.swift;
-      case "kotlin":
-        return FontAwesomeIcons.k;
-      case "html":
-        return FontAwesomeIcons.html5;
-      case "css":
-        return FontAwesomeIcons.css3;
-      case "react":
-        return FontAwesomeIcons.react;
-      case "nodejs":
-        return FontAwesomeIcons.nodeJs;
-      default:
-        return FontAwesomeIcons.question; // أيقونة افتراضية
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +134,7 @@ class InfoScreen extends StatelessWidget {
               return Row(
                 children: [
                   HomeScreen.techCircle(
-                    Teck(
+                   TechStack.teck(
                       Provider.of<ApiServiceFirebase>(
                         context,
                       ).profileModel.techStack[index].name,

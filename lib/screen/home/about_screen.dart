@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_profile/model/tech_stack_model.dart';
 import 'package:my_profile/notifiers/api_service_firebase.dart';
 import 'package:my_profile/screen/home/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -48,18 +48,33 @@ class AboutScreen extends StatelessWidget {
         SizedBox(height: 24),
 
         // أيقونات التواصل
-        Wrap(
-          spacing: 12,
-          runSpacing: 12,
-          children: [
-            HomeScreen.techCircle(FontAwesomeIcons.bootstrap),
-            HomeScreen.techCircle(FontAwesomeIcons.wordpress),
-            HomeScreen.techCircle(FontAwesomeIcons.js),
-            HomeScreen.techCircle(FontAwesomeIcons.react),
-            HomeScreen.techCircle(FontAwesomeIcons.nodeJs),
-            HomeScreen.techCircle(FontAwesomeIcons.database),
-            HomeScreen.techCircle(FontAwesomeIcons.ethereum),
-          ],
+        Container(
+          alignment: Alignment.center,
+          height: 50,
+          width: 700,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal, // 👈 يضمن أنها عمودية
+            itemCount:
+                Provider.of<ApiServiceFirebase>(
+                  context,
+                ).profileModel.techStack.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return Row(
+                children: [
+                  HomeScreen.techCircle(
+                    TechStack.teck(
+                      Provider.of<ApiServiceFirebase>(
+                        context,
+                      ).profileModel.techStack[index].name,
+                    ),
+                  ),
+                  SizedBox(width: 6),
+                ],
+              );
+            },
+          ),
         ),
 
         SizedBox(height: 24),
