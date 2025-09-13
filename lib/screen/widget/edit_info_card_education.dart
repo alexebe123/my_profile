@@ -56,8 +56,8 @@ class _EditInfoCardEducationState extends State<EditInfoCardEducation> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Edit',
+                       Text(
+                      (widget.isEdit) ?  'Edit':'Add New',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,

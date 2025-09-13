@@ -7,8 +7,14 @@ import 'package:my_profile/screen/widget/info_card_education.dart';
 import 'package:my_profile/screen/widget/info_cart_experience.dart';
 import 'package:provider/provider.dart';
 
-class ProfileSettings extends StatelessWidget {
+class ProfileSettings extends StatefulWidget {
   ProfileSettings({super.key});
+
+  @override
+  State<ProfileSettings> createState() => _ProfileSettingsState();
+}
+
+class _ProfileSettingsState extends State<ProfileSettings> {
   Future<Uint8List?> pickImage() async {
     final result = await FilePicker.platform.pickFiles(
       type: FileType.image,
@@ -21,8 +27,32 @@ class ProfileSettings extends StatelessWidget {
     return null;
   }
 
+  final TextEditingController _nameController = TextEditingController(text: "");
+  final TextEditingController _emailController = TextEditingController(
+    text: "",
+  );
+  final TextEditingController _passwordController = TextEditingController(
+    text: "",
+  );
+  Uint8List? image;
+
   @override
   Widget build(BuildContext context) {
+    _nameController.text =
+        Provider.of<ApiServiceFirebase>(
+          context,
+          listen: false,
+        ).profileModel.name;
+    _emailController.text =
+        Provider.of<ApiServiceFirebase>(
+          context,
+          listen: false,
+        ).profileModel.email;
+    _passwordController.text =
+        Provider.of<ApiServiceFirebase>(
+          context,
+          listen: false,
+        ).profileModel.password;
     return Scaffold(
       body: Center(
         child: Container(
@@ -46,45 +76,117 @@ class ProfileSettings extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 // --- الصورة الشخصية ---
-                Center(
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundImage: NetworkImage(
-                          Provider.of<ApiServiceFirebase>(
-                            context,
-                          ).profileModel.imageUrl,
-                        ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 200,
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            controller: _nameController,
+                            validator:
+                                (value) =>
+                                    value == null || value.isEmpty
+                                        ? "Enter your Name"
+                                        : null,
+                          ),
+                          TextFormField(
+                            controller: _emailController,
+                            validator:
+                                (value) =>
+                                    value == null || value.isEmpty
+                                        ? "Enter your Email"
+                                        : null,
+                          ),
+                          TextFormField(
+                            controller: _passwordController,
+                            validator:
+                                (value) =>
+                                    value == null || value.isEmpty
+                                        ? "Enter your Password"
+                                        : null,
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 10),
-                      ElevatedButton(
-                        onPressed: () async {
-                          final image = await pickImage();
-                          final urlImage =
-                              await Provider.of<ApiServiceFirebase>(
-                                context,
-                                listen: false,
-                              ).uploadPhoto(image!);
-                          Provider.of<ApiServiceFirebase>(
-                                context,
-                                listen: false,
-                              ).profileModel.imageUrl =
-                              urlImage;
-                          await Provider.of<ApiServiceFirebase>(
-                            context,
-                            listen: false,
-                          ).updateProfile(
+                    ),
+                    SizedBox(width: 10),
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            final pickedImage = await pickImage();
+                            if (pickedImage != null) {
+                              setState(() {
+                                image = pickedImage;
+                              });
+                            }
+                          },
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundImage:
+                                (image != null)
+                                    ? MemoryImage(image!)
+                                    : NetworkImage(
+                                          Provider.of<ApiServiceFirebase>(
+                                            context,
+                                          ).profileModel.imageUrl,
+                                        )
+                                        as ImageProvider,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: () async {
+                            if (image != null) {
+                              final urlImage =
+                                  await Provider.of<ApiServiceFirebase>(
+                                    context,
+                                    listen: false,
+                                  ).uploadPhoto(image!);
+                              Provider.of<ApiServiceFirebase>(
+                                    context,
+                                    listen: false,
+                                  ).profileModel.imageUrl =
+                                  urlImage;
+                            }
                             Provider.of<ApiServiceFirebase>(
+                                  context,
+                                  listen: false,
+                                ).profileModel.name =
+                                _nameController.text;
+                            Provider.of<ApiServiceFirebase>(
+                                  context,
+                                  listen: false,
+                                ).profileModel.email =
+                                _emailController.text;
+                            Provider.of<ApiServiceFirebase>(
+                                  context,
+                                  listen: false,
+                                ).profileModel.password =
+                                _passwordController.text;
+                            Provider.of<ApiServiceFirebase>(
+                                  context,
+                                  listen: false,
+                                ).profileModel.name =
+                                _nameController.text;
+
+                            await Provider.of<ApiServiceFirebase>(
                               context,
                               listen: false,
-                            ).profileModel,
-                          );
-                        },
-                        child: const Text("Upload New Photo"),
-                      ),
-                    ],
-                  ),
+                            ).updateProfile(
+                              Provider.of<ApiServiceFirebase>(
+                                context,
+                                listen: false,
+                              ).profileModel,
+                            );
+                          },
+                          child: const Text("Save"),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 30),
                 Row(

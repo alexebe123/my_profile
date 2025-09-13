@@ -3,6 +3,8 @@ class ProfileModel {
   String id = '';
   String imageUrl = '';
   String yearsOfExperience = '';
+  String email = "";
+  String password = "";
 
   ProfileModel.empty();
 
@@ -19,6 +21,12 @@ class ProfileModel {
     try {
       yearsOfExperience = json['yearsOfExperience'];
     } catch (e) {}
+    try {
+      email = json['email'];
+    } catch (e) {}
+    try {
+      password = json['password'];
+    } catch (e) {}
   }
 
   Map<String, dynamic> toJson() {
@@ -26,6 +34,8 @@ class ProfileModel {
     data['name'] = name;
     data['imageUrl'] = imageUrl;
     data['yearsOfExperience'] = yearsOfExperience;
+    data['email'] = email;
+    data['password'] = password;
     return data;
   }
 }

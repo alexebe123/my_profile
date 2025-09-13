@@ -1,6 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:my_profile/notifiers/api_service_firebase.dart';
 import 'package:my_profile/res/app_constant.dart';
+import 'package:provider/provider.dart';
 
 class DashbordInfoScreen extends StatelessWidget {
   const DashbordInfoScreen({super.key});
@@ -36,7 +38,6 @@ class DashbordInfoScreen extends StatelessWidget {
     );
   }
 }
-
 
 class _RecentProjects extends StatelessWidget {
   const _RecentProjects({Key? key}) : super(key: key);
@@ -296,9 +297,11 @@ class _DashboardHeader extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(color: Colors.white, width: 2),
-                image: const DecorationImage(
+                image: DecorationImage(
                   image: NetworkImage(
-                    AppConstant.profileImage,
+                    Provider.of<ApiServiceFirebase>(
+                      context,
+                    ).profileModel.imageUrl,
                   ), // Use your own image URL
                   fit: BoxFit.cover,
                 ),
@@ -310,7 +313,6 @@ class _DashboardHeader extends StatelessWidget {
     );
   }
 }
-
 
 class _StatsCards extends StatelessWidget {
   const _StatsCards({Key? key}) : super(key: key);

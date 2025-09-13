@@ -60,8 +60,8 @@ class _EditExperienceCardState extends State<EditExperienceCard> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Edit',
+                      Text(
+                        (widget.isEdit) ? 'Edit' : "Add New",
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
