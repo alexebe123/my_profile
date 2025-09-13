@@ -9,8 +9,8 @@ class EditInfoCardEducation extends StatefulWidget {
     required this.isEdit,
     required this.educationHistoryModel,
   });
-  bool isEdit = false;
-  EducationHistoryModel educationHistoryModel;
+  final bool isEdit;
+  final EducationHistoryModel educationHistoryModel;
   @override
   State<EditInfoCardEducation> createState() => _EditInfoCardEducationState();
 }

@@ -20,7 +20,7 @@ Widget infoCardExperience(BuildContext context, bool isEdit) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               '💼 Professional Experience',

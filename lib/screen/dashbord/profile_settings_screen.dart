@@ -18,6 +18,7 @@ class ProfileSettings extends StatelessWidget {
     if (result != null && result.files.single.bytes != null) {
       return result.files.single.bytes;
     }
+    return null;
   }
 
   @override
@@ -86,9 +87,19 @@ class ProfileSettings extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 30),
-                // --- Responsive Grid ---
-                infoCardEducation(context, true),
-                infoCardExperience(context, true),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 550,
+                      child: infoCardEducation(context, true),
+                    ),
+                    SizedBox(width: 10),
+                    SizedBox(
+                      width: 500,
+                      child: infoCardExperience(context, true),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

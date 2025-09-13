@@ -9,8 +9,8 @@ class EditExperienceCard extends StatefulWidget {
     required this.isEdit,
     required this.experienceHistoryModel,
   });
-  bool isEdit;
-  ExperienceHistoryModel experienceHistoryModel;
+  final bool isEdit;
+  final ExperienceHistoryModel experienceHistoryModel;
   @override
   State<EditExperienceCard> createState() => _EditExperienceCardState();
 }

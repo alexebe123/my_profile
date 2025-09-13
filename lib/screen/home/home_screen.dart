@@ -349,13 +349,13 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class InfoCardExperienceWidget extends StatelessWidget {
-  InfoCardExperienceWidget({
+  const InfoCardExperienceWidget({
     super.key,
     required this.experienceHistoryModel,
     required this.isEdit,
   });
-  ExperienceHistoryModel experienceHistoryModel;
-  bool isEdit;
+  final ExperienceHistoryModel experienceHistoryModel;
+  final bool isEdit;
 
   @override
   Widget build(BuildContext context) {

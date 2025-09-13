@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_profile/notifiers/api_service_firebase.dart';
-import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/screen/home/home_screen.dart';
 import 'package:provider/provider.dart';
 
