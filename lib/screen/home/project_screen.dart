@@ -1,15 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_profile/model/product_model.dart';
 import 'package:my_profile/notifiers/api_service_firebase.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ProjectScreen extends StatelessWidget {
+class ProjectScreen extends StatefulWidget {
   const ProjectScreen({super.key});
 
   @override
+  State<ProjectScreen> createState() => _ProjectScreenState();
+}
+
+class _ProjectScreenState extends State<ProjectScreen> {
+  final Map<String, String> typeMap = {
+    'All': 'All',
+    'Web Apps': 'web', // تأكد أن 'web' هو نفس القيمة في model
+    'Mobile Apps': 'Mobile', // أو 'mobile' حسب ما تحفظ في project.type
+    'Desktop App': 'Desktop',
+  };
+
+  String selectedFilter = 'All'; // القيمة الافتراضية/ القيمة الافتراضية
+
+  @override
   Widget build(BuildContext context) {
+    final allProjects = Provider.of<ApiServiceFirebase>(context).projects;
+
+    // خذ القيمة الداخلية المطابقة للاختيار
+    final String selectedTypeValue = typeMap[selectedFilter] ?? 'All';
+
+    // فلترة بطريقة case-insensitive
+    final List<ProjectModel> filteredProjects =
+        selectedTypeValue == 'All'
+            ? allProjects
+            : allProjects.where((p) {
+              final pType = (p.type).toString().toLowerCase();
+              return pType == selectedTypeValue.toLowerCase();
+            }).toList();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -32,10 +60,10 @@ class ProjectScreen extends StatelessWidget {
               children: [
                 DropdownButton<String>(
                   dropdownColor: const Color(0xFF1A1A1A),
-                  value: "Web Apps",
+                  value: selectedFilter,
                   style: const TextStyle(color: Colors.white),
                   items:
-                      ["Web Apps", "Mobile Apps", "AI Projects"]
+                      ["All", "Web Apps", "Mobile Apps", "Desktop App"]
                           .map(
                             (e) => DropdownMenuItem(
                               value: e,
@@ -46,7 +74,11 @@ class ProjectScreen extends StatelessWidget {
                             ),
                           )
                           .toList(),
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    setState(() {
+                      selectedFilter = value!;
+                    });
+                  },
                 ),
                 const Spacer(),
                 SizedBox(
@@ -72,38 +104,30 @@ class ProjectScreen extends StatelessWidget {
 
             // 🔹 Projects Grid
             Expanded(
-              child: GridView.builder(
-                shrinkWrap: true, // مهم
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  childAspectRatio: 0.8, // تتحكم في الطول/العرض
-                ),
-                itemCount:
-                    Provider.of<ApiServiceFirebase>(context).projects.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: ProjectCard(
-                      title:
-                          Provider.of<ApiServiceFirebase>(
-                            context,
-                          ).projects[index].name,
-                      description:
-                          Provider.of<ApiServiceFirebase>(
-                            context,
-                          ).projects[index].description,
-                      imageUrl:
-                          Provider.of<ApiServiceFirebase>(
-                            context,
-                          ).projects[index].imageUrl,
-                      linkGitHub:
-                          Provider.of<ApiServiceFirebase>(
-                            context,
-                          ).projects[index].linkGithub,
-                    ),
-                  );
-                },
-              ),
+              child:
+                  filteredProjects.isEmpty
+                      ? const Center(
+                        child: Text(
+                          "No projects found",
+                          style: TextStyle(color: Colors.white70, fontSize: 16),
+                        ),
+                      )
+                      : GridView.builder(
+                        shrinkWrap: true, // مهم
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          childAspectRatio: 0.8, // تتحكم في الطول/العرض
+                        ),
+                        itemCount: filteredProjects.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(18.0),
+                            child: ProjectCard(
+                              projectModel: filteredProjects[index],
+                            ),
+                          );
+                        },
+                      ),
             ),
           ],
         ),
@@ -113,18 +137,9 @@ class ProjectScreen extends StatelessWidget {
 }
 
 class ProjectCard extends StatelessWidget {
-  final String title;
-  final String description;
-  final String imageUrl;
-  final String linkGitHub;
+  final ProjectModel projectModel;
 
-  const ProjectCard({
-    super.key,
-    required this.title,
-    required this.description,
-    required this.imageUrl,
-    required this.linkGitHub,
-  });
+  const ProjectCard({super.key, required this.projectModel});
 
   Future<void> _launchUrl(String url) async {
     final Uri uri = Uri.parse(url);
@@ -168,7 +183,9 @@ class ProjectCard extends StatelessWidget {
                           ),
                         ),
                         backgroundColor: Colors.black,
-                        body: PhotoView(imageProvider: NetworkImage(imageUrl)),
+                        body: PhotoView(
+                          imageProvider: NetworkImage(projectModel.imageUrl),
+                        ),
                       ),
                 ),
               );
@@ -178,7 +195,7 @@ class ProjectCard extends StatelessWidget {
                 top: Radius.circular(16),
               ),
               child: Image.network(
-                imageUrl,
+                projectModel.imageUrl,
                 height: 160,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -191,7 +208,7 @@ class ProjectCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Text(
-              title,
+              projectModel.name,
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -206,7 +223,7 @@ class ProjectCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Text(
-              description,
+              projectModel.description,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontSize: 14, color: Colors.grey),
@@ -265,7 +282,7 @@ class ProjectCard extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      _launchUrl(linkGitHub);
+                      _launchUrl(projectModel.linkGithub);
                     },
                     child: const Text("GitHub"),
                   ),
