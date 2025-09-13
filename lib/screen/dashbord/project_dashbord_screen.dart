@@ -94,6 +94,20 @@ class ProjectDashbordScreen extends StatelessWidget {
 class ProjectCard extends StatelessWidget {
   final ProjectModel projectModel;
   const ProjectCard({super.key, required this.projectModel});
+  Color getStatusColor(String status) {
+    switch (status) {
+      case 'In Progress':
+        return Colors.blue; // أزرق للمشاريع اللي راهي جارية
+      case 'Completed':
+        return Colors.green; // أخضر للمشاريع اللي كملت
+      case 'Pending':
+        return Colors.orange; // برتقالي للمشاريع المعلقة
+      case 'Cancelled':
+        return Colors.red; // أحمر للمشاريع الملغية
+      default:
+        return Colors.grey; // لون افتراضي لو ما تطابق حتى حالة
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +154,7 @@ class ProjectCard extends StatelessWidget {
                 child: Text(
                   projectModel.status,
                   style: TextStyle(
-                    color: Colors.red,
+                    color: getStatusColor(projectModel.status),
                     fontWeight: FontWeight.bold,
                     fontSize: 12,
                   ),

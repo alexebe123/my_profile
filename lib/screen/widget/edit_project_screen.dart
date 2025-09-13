@@ -53,7 +53,7 @@ class _EditProjectDialogState extends State<EditProjectDialog> {
       });
     }
   }
-
+  
   @override
   initState() {
     super.initState();
