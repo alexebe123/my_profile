@@ -23,21 +23,35 @@ class _ProjectScreenState extends State<ProjectScreen> {
 
   String selectedFilter = 'All'; // القيمة الافتراضية/ القيمة الافتراضية
 
+  String searchQuery = '';
+
   @override
   Widget build(BuildContext context) {
     final allProjects = Provider.of<ApiServiceFirebase>(context).projects;
 
     // خذ القيمة الداخلية المطابقة للاختيار
-    final String selectedTypeValue = typeMap[selectedFilter] ?? 'All';
-
+    String selectedTypeValue = typeMap[selectedFilter] ?? 'All';
     // فلترة بطريقة case-insensitive
-    final List<ProjectModel> filteredProjects =
+    List<ProjectModel> filteredProjects =
         selectedTypeValue == 'All'
             ? allProjects
             : allProjects.where((p) {
               final pType = (p.type).toString().toLowerCase();
               return pType == selectedTypeValue.toLowerCase();
             }).toList();
+    selectedTypeValue = typeMap[selectedFilter] ?? 'All';
+
+    filteredProjects =
+        allProjects.where((p) {
+          final pType = (p.type).toString().toLowerCase();
+          final pName = (p.name).toLowerCase();
+          final matchesType =
+              selectedTypeValue == 'All'
+                  ? true
+                  : pType == selectedTypeValue.toLowerCase();
+          final matchesSearch = pName.contains(searchQuery.toLowerCase());
+          return matchesType && matchesSearch;
+        }).toList();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -96,6 +110,11 @@ class _ProjectScreenState extends State<ProjectScreen> {
                         borderSide: BorderSide.none,
                       ),
                     ),
+                    onChanged: (value) {
+                      setState(() {
+                        searchQuery = value;
+                      });
+                    },
                   ),
                 ),
               ],
