@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_profile/model/tech_stack_model.dart';
 import 'package:my_profile/notifiers/api_service_firebase.dart';
 import 'package:my_profile/res/app_constant.dart';
+import 'package:my_profile/screen/widget/edit_link_social_media.dart';
 import 'package:my_profile/screen/widget/info_card_education.dart';
 import 'package:my_profile/screen/widget/info_cart_experience.dart';
 import 'package:provider/provider.dart';
@@ -399,6 +400,24 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                       ),
                     ),
                   ],
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    backgroundColor: Colors.blue,
+                  ),
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return SocialMediaLinksScreen();
+                      },
+                    );
+                  },
+                  child: Text("Update Link"),
                 ),
                 const SizedBox(height: 30),
                 // --- التعلم و الخبرات ---

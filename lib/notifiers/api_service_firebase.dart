@@ -7,6 +7,7 @@ import 'package:my_profile/model/contact_us_model.dart';
 import 'package:my_profile/model/education_history_model.dart';
 import 'package:my_profile/model/experience_history_model.dart';
 import 'package:my_profile/model/profile_model.dart';
+import 'package:my_profile/model/social_media_link.dart';
 import 'package:my_profile/res/app_constant.dart';
 import 'package:my_profile/model/product_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -26,10 +27,9 @@ class ApiServiceFirebase extends ChangeNotifier {
   List<ProjectModel> projects = [];
   List<EducationHistoryModel> educationHistory = [];
   List<ExperienceHistoryModel> experienceHistory = [];
+  SocialMediaLinkModel socialMediaLinkModel = SocialMediaLinkModel.empty();
 
   ApiServiceFirebase._internal();
-  
-  
 
   // Your API methods go here
   Future<void> getUsersData() async {
@@ -49,7 +49,6 @@ class ApiServiceFirebase extends ChangeNotifier {
             }).toList();
         profileModel = list[0];
       }
-      profileModel;
       notifyListeners();
     } catch (e) {
       ProfileModel.empty();
@@ -288,6 +287,42 @@ class ApiServiceFirebase extends ChangeNotifier {
           .doc(profile.id)
           .update(profile.toJson());
       profileModel = profile;
+      notifyListeners();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> getSocialMediaLink() async {
+    // Implement your API call here
+    experienceHistory.clear();
+    try {
+      final data =
+          await firebaseFirestore
+              .collection(AppConstant.collectionIdSocialMediaLink)
+              .get();
+      if (data.docs.isNotEmpty) {
+        final list =
+            data.docs.map<SocialMediaLinkModel>((doc) {
+              var map = doc.data();
+              map["\$id"] = doc.id;
+              return SocialMediaLinkModel.fromJson(map);
+            }).toList();
+        socialMediaLinkModel = list[0];
+      }
+      notifyListeners();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> updateSocialMediaLink(SocialMediaLinkModel socialMediaLink)async {
+     try {
+      await firebaseFirestore
+          .collection(AppConstant.collectionIdSocialMediaLink)
+          .doc(socialMediaLink.id)
+          .update(socialMediaLink.toJson());
+      socialMediaLinkModel = socialMediaLink;
       notifyListeners();
     } catch (e) {
       print(e.toString());

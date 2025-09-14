@@ -62,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
   initState() {
     super.initState();
     Provider.of<ApiServiceFirebase>(context, listen: false).getUsersData();
+    Provider.of<ApiServiceFirebase>(context, listen: false).getSocialMediaLink();
     Provider.of<ApiServiceFirebase>(context, listen: false).getProducts();
     Provider.of<ApiServiceFirebase>(
       context,
