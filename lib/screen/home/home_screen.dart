@@ -62,7 +62,10 @@ class _HomeScreenState extends State<HomeScreen> {
   initState() {
     super.initState();
     Provider.of<ApiServiceFirebase>(context, listen: false).getUsersData();
-    Provider.of<ApiServiceFirebase>(context, listen: false).getSocialMediaLink();
+    Provider.of<ApiServiceFirebase>(
+      context,
+      listen: false,
+    ).getSocialMediaLink();
     Provider.of<ApiServiceFirebase>(context, listen: false).getProducts();
     Provider.of<ApiServiceFirebase>(
       context,
@@ -122,7 +125,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(height: 10),
                       IconButton(
                         onPressed: () {
-                          _launchUrl("https://github.com/alexebe123");
+                          _launchUrl(
+                            Provider.of<ApiServiceFirebase>(
+                              context,
+                              listen: false,
+                            ).socialMediaLinkModel.x,
+                          );
                         },
                         icon: _SocialIcon(icon: FontAwesomeIcons.twitter),
                       ),
@@ -130,7 +138,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       IconButton(
                         onPressed: () {
                           _launchUrl(
-                            "https://www.facebook.com/ali.loo.591704/",
+                            Provider.of<ApiServiceFirebase>(
+                              context,
+                              listen: false,
+                            ).socialMediaLinkModel.facebook,
                           );
                         },
                         icon: _SocialIcon(icon: FontAwesomeIcons.facebookF),
@@ -138,28 +149,48 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(height: 10),
                       IconButton(
                         onPressed: () {
-                          _launchUrl("https://www.linkedin.com/in/alexebe123");
+                          _launchUrl(
+                            Provider.of<ApiServiceFirebase>(
+                              context,
+                              listen: false,
+                            ).socialMediaLinkModel.linkedin,
+                          );
                         },
                         icon: _SocialIcon(icon: FontAwesomeIcons.linkedinIn),
                       ),
                       SizedBox(height: 10),
                       IconButton(
                         onPressed: () {
-                          _launchUrl("https://github.com/alexebe123");
+                          _launchUrl(
+                            Provider.of<ApiServiceFirebase>(
+                              context,
+                              listen: false,
+                            ).socialMediaLinkModel.github,
+                          );
                         },
                         icon: _SocialIcon(icon: FontAwesomeIcons.github),
                       ),
                       SizedBox(height: 10),
                       IconButton(
                         onPressed: () {
-                          _launchUrl("https://www.gmail.com/");
+                          _launchUrl(
+                            Provider.of<ApiServiceFirebase>(
+                              context,
+                              listen: false,
+                            ).socialMediaLinkModel.instgram,
+                          );
                         },
-                        icon: _SocialIcon(icon: FontAwesomeIcons.envelope),
+                        icon: _SocialIcon(icon: FontAwesomeIcons.instagram),
                       ),
                       SizedBox(height: 10),
                       IconButton(
                         onPressed: () {
-                          _launchUrl("https://www.tiktok.com/@alexebe123");
+                          _launchUrl(
+                            Provider.of<ApiServiceFirebase>(
+                              context,
+                              listen: false,
+                            ).socialMediaLinkModel.tiktok,
+                          );
                         },
                         icon: _SocialIcon(icon: FontAwesomeIcons.tiktok),
                       ),
