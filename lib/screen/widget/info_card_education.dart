@@ -7,6 +7,8 @@ import 'package:my_profile/screen/widget/edit_info_card_education.dart';
 import 'package:provider/provider.dart';
 
 Widget infoCardEducation(BuildContext context, bool isEdit) {
+  final width = MediaQuery.of(context).size.width;
+  final height = MediaQuery.of(context).size.height;
   return Container(
     padding: const EdgeInsets.all(18),
     decoration: BoxDecoration(
@@ -67,8 +69,8 @@ Widget infoCardEducation(BuildContext context, bool isEdit) {
         SizedBox(height: 10),
 
         SizedBox(
-          height: 200,
-          width: double.infinity,
+          height: height * 0.3,
+          width: width,
           child: ListView.builder(
             itemCount:
                 Provider.of<ApiServiceFirebase>(

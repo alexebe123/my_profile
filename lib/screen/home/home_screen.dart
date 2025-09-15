@@ -485,6 +485,8 @@ class InfoCardEducationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final isDesktop = w >= 1000;
     return Container(
       color: Color.fromARGB(255, 21, 23, 26),
       child: Row(
@@ -507,10 +509,11 @@ class InfoCardEducationWidget extends StatelessWidget {
               ),
               SizedBox(height: 6),
               SizedBox(
-                width: 400,
+                width: (isDesktop) ? w * 0.15 : w * 0.4,
                 child: Text(
                   editEducationHistoryModel.description,
                   overflow: TextOverflow.ellipsis,
+                  softWrap: true,
                   style: TextStyle(color: Colors.white70),
                 ),
               ),
