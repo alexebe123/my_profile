@@ -99,8 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    final w = MediaQuery.of(context).size.width;
-    final isDesktop = w >= 1000;
+    final width = MediaQuery.of(context).size.width;
+    bool isDesktop = width >= 1024;
     bool isActive = false;
 
     return Scaffold(
@@ -292,6 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         // ---------------- Top Files Bar ----------------
                         Container(
+                          width: width,
                           height: 50,
                           color: Colors.black, // خلفية سوداء ثابتة
                           child: Row(
@@ -331,21 +332,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                   ),
-                                  width: 140,
+                                  width:
+                                      (isDesktop) ? width * 0.15 : width * 0.14,
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Icon(
                                         files[index]["icon"],
                                         color: files[index]["color"],
-                                        size: 30,
+                                        size:
+                                            (isDesktop)
+                                                ? width * 0.03
+                                                : width * 0.04,
                                       ),
                                       const SizedBox(width: 6),
-                                      Text(
-                                        files[index]["name"],
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500,
+                                      FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text(
+                                          files[index]["name"],
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: width * 0.01,
+                                          ),
                                         ),
                                       ),
                                     ],
