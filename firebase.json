@@ -1,1 +1,40 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"electro-daimn-house","appId":"1:250872293296:android:ba7c3282e1b49609af1875","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"electro-daimn-house","configurations":{"android":"1:250872293296:android:ba7c3282e1b49609af1875","ios":"1:250872293296:ios:ed65134fd34d4e23af1875","macos":"1:250872293296:ios:ed65134fd34d4e23af1875","web":"1:250872293296:web:9ff3e76d003af0e2af1875","windows":"1:250872293296:web:0129770c1a383c9aaf1875"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "electro-daimn-house",
+          "appId": "1:250872293296:android:ba7c3282e1b49609af1875",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "electro-daimn-house",
+          "configurations": {
+            "android": "1:250872293296:android:ba7c3282e1b49609af1875",
+            "ios": "1:250872293296:ios:ed65134fd34d4e23af1875",
+            "macos": "1:250872293296:ios:ed65134fd34d4e23af1875",
+            "web": "1:250872293296:web:9ff3e76d003af0e2af1875",
+            "windows": "1:250872293296:web:0129770c1a383c9aaf1875"
+          }
+        }
+      }
+    }
+  },
+ "hosting": {
+  "public": "build/web",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ],
+  "rewrites": [
+    {
+      "source": "**",
+      "destination": "/index.html"
+    }
+  ]
+}
+
+}

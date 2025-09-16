@@ -10,30 +10,28 @@ class DashbordInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header and profile section
-              const _DashboardHeader(),
-              const SizedBox(height: 32),
-              // Stats cards
-              const _StatsCards(),
-              const SizedBox(height: 32),
-              // Recent projects and chart
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Expanded(flex: 2, child: _RecentProjects()),
-                  const SizedBox(width: 32),
-                  const Expanded(flex: 3, child: _AnalyticsChart()),
-                ],
-              ),
-            ],
-          ),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header and profile section
+            const _DashboardHeader(),
+            const SizedBox(height: 32),
+            // Stats cards
+            const _StatsCards(),
+            const SizedBox(height: 32),
+            // Recent projects and chart
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Expanded(flex: 2, child: _RecentProjects()),
+                const SizedBox(width: 32),
+                const Expanded(flex: 3, child: _AnalyticsChart()),
+              ],
+            ),
+          ],
         ),
       ),
     );
