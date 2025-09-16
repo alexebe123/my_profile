@@ -97,133 +97,336 @@ class _HomeScreenState extends State<HomeScreen> {
     AboutScreen(),
     ContactMeScreen(),
   ];
+  bool isDrawerOpen = false;
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     bool isDesktop = width >= 1024;
+    final isTablet = width >= 700 && width < 1000;
     bool isActive = false;
 
     return Scaffold(
-      body: SafeArea(
-        child: Row(
-          children: [
-            SizedBox(
-              width: 60,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+      body: Stack(
+        children: [
+          SafeArea(
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 60,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(height: 10),
-                      Container(
-                        width: 60,
-                        height: 60,
-                        color: AppConstant.sidebarColor,
-                        child: _SocialIcon(icon: FontAwesomeIcons.copy),
-                      ),
-                      SizedBox(height: 10),
-                      IconButton(
-                        onPressed: () {
-                          _launchUrl(
-                            Provider.of<ApiServiceFirebase>(
-                              context,
-                              listen: false,
-                            ).socialMediaLinkModel.x,
-                          );
-                        },
-                        icon: _SocialIcon(icon: FontAwesomeIcons.twitter),
-                      ),
-                      SizedBox(height: 10),
-                      IconButton(
-                        onPressed: () {
-                          _launchUrl(
-                            Provider.of<ApiServiceFirebase>(
-                              context,
-                              listen: false,
-                            ).socialMediaLinkModel.facebook,
-                          );
-                        },
-                        icon: _SocialIcon(icon: FontAwesomeIcons.facebookF),
-                      ),
-                      SizedBox(height: 10),
-                      IconButton(
-                        onPressed: () {
-                          _launchUrl(
-                            Provider.of<ApiServiceFirebase>(
-                              context,
-                              listen: false,
-                            ).socialMediaLinkModel.linkedin,
-                          );
-                        },
-                        icon: _SocialIcon(icon: FontAwesomeIcons.linkedinIn),
-                      ),
-                      SizedBox(height: 10),
-                      IconButton(
-                        onPressed: () {
-                          _launchUrl(
-                            Provider.of<ApiServiceFirebase>(
-                              context,
-                              listen: false,
-                            ).socialMediaLinkModel.github,
-                          );
-                        },
-                        icon: _SocialIcon(icon: FontAwesomeIcons.github),
-                      ),
-                      SizedBox(height: 10),
-                      IconButton(
-                        onPressed: () {
-                          _launchUrl(
-                            Provider.of<ApiServiceFirebase>(
-                              context,
-                              listen: false,
-                            ).socialMediaLinkModel.instgram,
-                          );
-                        },
-                        icon: _SocialIcon(icon: FontAwesomeIcons.instagram),
-                      ),
-                      SizedBox(height: 10),
-                      IconButton(
-                        onPressed: () {
-                          _launchUrl(
-                            Provider.of<ApiServiceFirebase>(
-                              context,
-                              listen: false,
-                            ).socialMediaLinkModel.tiktok,
-                          );
-                        },
-                        icon: _SocialIcon(icon: FontAwesomeIcons.tiktok),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          _launchUrl("https://www.fiverr.com/alexebe123");
-                        },
-                        icon: _SocialIcon(icon: FontAwesomeIcons.user),
-                      ),
-                      SizedBox(height: 10),
-                      IconButton(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => DashboardScreen(),
-                            ),
-                          );
-                        },
-                        icon: _SocialIcon(icon: FontAwesomeIcons.gear),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10),
+                          (isDesktop || isTablet)
+                              ? Container(
+                                width: 60,
+                                height: 60,
+                                color: AppConstant.sidebarColor,
+                                child: _SocialIcon(icon: FontAwesomeIcons.copy),
+                              )
+                              : GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    isDrawerOpen = !isDrawerOpen; // فتح الدراور
+                                  });
+                                },
+                                child: Container(
+                                  width: 60,
+                                  height: 60,
+                                  color: AppConstant.sidebarColor,
+                                  child: _SocialIcon(
+                                    icon: FontAwesomeIcons.copy,
+                                  ),
+                                ),
+                              ),
 
-            // ===== شريط جانبي ثابت (icons + files) =====
-            if (isDesktop)
-              Container(
+                          SizedBox(height: 10),
+                          IconButton(
+                            onPressed: () {
+                              _launchUrl(
+                                Provider.of<ApiServiceFirebase>(
+                                  context,
+                                  listen: false,
+                                ).socialMediaLinkModel.x,
+                              );
+                            },
+                            icon: _SocialIcon(icon: FontAwesomeIcons.twitter),
+                          ),
+                          SizedBox(height: 10),
+                          IconButton(
+                            onPressed: () {
+                              _launchUrl(
+                                Provider.of<ApiServiceFirebase>(
+                                  context,
+                                  listen: false,
+                                ).socialMediaLinkModel.facebook,
+                              );
+                            },
+                            icon: _SocialIcon(icon: FontAwesomeIcons.facebookF),
+                          ),
+                          SizedBox(height: 10),
+                          IconButton(
+                            onPressed: () {
+                              _launchUrl(
+                                Provider.of<ApiServiceFirebase>(
+                                  context,
+                                  listen: false,
+                                ).socialMediaLinkModel.linkedin,
+                              );
+                            },
+                            icon: _SocialIcon(
+                              icon: FontAwesomeIcons.linkedinIn,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          IconButton(
+                            onPressed: () {
+                              _launchUrl(
+                                Provider.of<ApiServiceFirebase>(
+                                  context,
+                                  listen: false,
+                                ).socialMediaLinkModel.github,
+                              );
+                            },
+                            icon: _SocialIcon(icon: FontAwesomeIcons.github),
+                          ),
+                          SizedBox(height: 10),
+                          IconButton(
+                            onPressed: () {
+                              _launchUrl(
+                                Provider.of<ApiServiceFirebase>(
+                                  context,
+                                  listen: false,
+                                ).socialMediaLinkModel.instgram,
+                              );
+                            },
+                            icon: _SocialIcon(icon: FontAwesomeIcons.instagram),
+                          ),
+                          SizedBox(height: 10),
+                          IconButton(
+                            onPressed: () {
+                              _launchUrl(
+                                Provider.of<ApiServiceFirebase>(
+                                  context,
+                                  listen: false,
+                                ).socialMediaLinkModel.tiktok,
+                              );
+                            },
+                            icon: _SocialIcon(icon: FontAwesomeIcons.tiktok),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              _launchUrl("https://www.fiverr.com/alexebe123");
+                            },
+                            icon: _SocialIcon(icon: FontAwesomeIcons.user),
+                          ),
+                          SizedBox(height: 10),
+                          IconButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => DashboardScreen(),
+                                ),
+                              );
+                            },
+                            icon: _SocialIcon(icon: FontAwesomeIcons.gear),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                // ===== شريط جانبي ثابت (icons + files) =====
+                if (isDesktop)
+                  Container(
+                    width: 220,
+                    color: AppConstant.sidebarColor,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 16,
+                      horizontal: 12,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'EXPLORER',
+                          style: TextStyle(color: Colors.white54, fontSize: 12),
+                        ),
+                        const SizedBox(height: 12),
+                        Column(
+                          children: List.generate(files.length, (index) {
+                            isActive = selectedIndex == index;
+                            return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedIndex = index;
+                                  // استبدال jumpToPage بـ animateToPage لإضافة انزلاق سلس
+                                  _pageController.animateToPage(
+                                    index,
+                                    duration: const Duration(milliseconds: 100),
+                                    curve: Curves.easeInOut,
+                                  );
+                                });
+                              },
+                              child: Container(
+                                color:
+                                    isActive
+                                        ? const Color(0xFF161B1F)
+                                        : Colors.transparent,
+                                child: HomeScreen._fileItem(
+                                  icon: files[index]["icon"],
+                                  label: files[index]["name"],
+                                  color: files[index]["color"],
+                                ),
+                              ),
+                            );
+                          }),
+                        ),
+
+                        const SizedBox(height: 18),
+                        const Divider(color: Colors.black45),
+                        const SizedBox(height: 12),
+
+                        // أيقونات اجتماعية رأسية
+                      ],
+                    ),
+                  ),
+
+                // ===== المحتوى الرئيسي =====
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 22,
+                      horizontal: isDesktop ? 28 : 16,
+                    ),
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 1200),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // ---------------- Top Files Bar ----------------
+                            (isDesktop || isTablet)
+                                ? Container(
+                                  height: 50, // الطول ثابت
+
+                                  color: Colors.black, // خلفية سوداء ثابتة
+                                  child: Expanded(
+                                    child: Row(
+                                      children: List.generate(files.length, (
+                                        index,
+                                      ) {
+                                        final isActive = selectedIndex == index;
+                                        return GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              selectedIndex = index;
+                                              // استبدال jumpToPage بـ animateToPage لإضافة انزلاق سلس
+                                              _pageController.animateToPage(
+                                                index,
+                                                duration: const Duration(
+                                                  milliseconds: 900,
+                                                ),
+                                                curve: Curves.easeInOut,
+                                              );
+                                            });
+                                          },
+                                          child: Container(
+                                            margin: const EdgeInsets.only(
+                                              right: 8,
+                                            ),
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  isActive
+                                                      ? const Color(0xFF0D1117)
+                                                      : Colors
+                                                          .transparent, // خلفية صفراء للنشط
+                                              border: Border(
+                                                top: BorderSide(
+                                                  color:
+                                                      isActive
+                                                          ? Colors.yellow
+                                                          : Colors
+                                                              .transparent, // خط أصفر أعلى النشط
+                                                  width: 2,
+                                                ),
+                                              ),
+                                            ),
+                                            width:
+                                                (isDesktop)
+                                                    ? width * 0.15
+                                                    : width * 0.14,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Expanded(
+                                                  child: Icon(
+                                                    files[index]["icon"],
+                                                    color:
+                                                        files[index]["color"],
+                                                    size:
+                                                        (isDesktop)
+                                                            ? width * 0.02
+                                                            : width * 0.03,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 2),
+                                                Expanded(
+                                                  child: Text(
+                                                    files[index]["name"],
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight
+                                                              .w300, // يخليه في سطر واحد فقط
+                                                    ),
+                                                    maxLines: 1,
+                                                    softWrap: false,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                    ),
+                                  ),
+                                )
+                                : SizedBox(),
+
+                            SizedBox(
+                              height: 700,
+                              width: 1000,
+                              child: PageView(
+                                controller: _pageController,
+                                children: _pages,
+                                // تمكين التمرير إذا أراد المستخدم السحب اليدوي مع الاحتفاظ بسلاسة الانتقال
+                                physics: const BouncingScrollPhysics(),
+                              ),
+                            ),
+
+                            // ---------------- Main Content ----------------
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          (isDrawerOpen)
+              ? Container(
                 width: 220,
                 color: AppConstant.sidebarColor,
                 padding: const EdgeInsets.symmetric(
@@ -245,6 +448,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: () {
                             setState(() {
                               selectedIndex = index;
+                              isDrawerOpen = false;
                               // استبدال jumpToPage بـ animateToPage لإضافة انزلاق سلس
                               _pageController.animateToPage(
                                 index,
@@ -275,115 +479,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     // أيقونات اجتماعية رأسية
                   ],
                 ),
-              ),
-
-            // ===== المحتوى الرئيسي =====
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(
-                  vertical: 22,
-                  horizontal: isDesktop ? 28 : 16,
-                ),
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 1200),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // ---------------- Top Files Bar ----------------
-                        Container(
-                          width: width,
-                          height: 50,
-                          color: Colors.black, // خلفية سوداء ثابتة
-                          child: Row(
-                            children: List.generate(files.length, (index) {
-                              final isActive = selectedIndex == index;
-                              return GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    selectedIndex = index;
-                                    // استبدال jumpToPage بـ animateToPage لإضافة انزلاق سلس
-                                    _pageController.animateToPage(
-                                      index,
-                                      duration: const Duration(
-                                        milliseconds: 900,
-                                      ),
-                                      curve: Curves.easeInOut,
-                                    );
-                                  });
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.only(right: 8),
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        isActive
-                                            ? const Color(0xFF0D1117)
-                                            : Colors
-                                                .transparent, // خلفية صفراء للنشط
-                                    border: Border(
-                                      top: BorderSide(
-                                        color:
-                                            isActive
-                                                ? Colors.yellow
-                                                : Colors
-                                                    .transparent, // خط أصفر أعلى النشط
-                                        width: 2,
-                                      ),
-                                    ),
-                                  ),
-                                  width:
-                                      (isDesktop) ? width * 0.15 : width * 0.14,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        files[index]["icon"],
-                                        color: files[index]["color"],
-                                        size:
-                                            (isDesktop)
-                                                ? width * 0.03
-                                                : width * 0.04,
-                                      ),
-                                      const SizedBox(width: 6),
-                                      FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        child: Text(
-                                          files[index]["name"],
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: width * 0.01,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 700,
-                          width: 1000,
-                          child: PageView(
-                            controller: _pageController,
-                            children: _pages,
-                            // تمكين التمرير إذا أراد المستخدم السحب اليدوي مع الاحتفاظ بسلاسة الانتقال
-                            physics: const BouncingScrollPhysics(),
-                          ),
-                        ),
-
-                        // ---------------- Main Content ----------------
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+              )
+              : SizedBox(),
+        ],
       ),
     );
   }
