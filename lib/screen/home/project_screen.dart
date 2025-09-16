@@ -131,21 +131,18 @@ class _ProjectScreenState extends State<ProjectScreen> {
                           style: TextStyle(color: Colors.white70, fontSize: 16),
                         ),
                       )
-                      : GridView.builder(
-                        shrinkWrap: true, // مهم
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          childAspectRatio: 0.8, // تتحكم في الطول/العرض
-                        ),
-                        itemCount: filteredProjects.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(18.0),
-                            child: ProjectCard(
+                      : SingleChildScrollView(
+                        child: Wrap(
+                          spacing: 10, // المسافة الأفقية بين العناصر
+                          runSpacing: 10, // المسافة العمودية بين الصفوف
+                          children: List.generate(filteredProjects.length, (
+                            index,
+                          ) {
+                            return ProjectCard(
                               projectModel: filteredProjects[index],
-                            ),
-                          );
-                        },
+                            );
+                          }),
+                        ),
                       ),
             ),
           ],
@@ -170,6 +167,8 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 300, // 👈 عرض ثابت
+      height: 400,
       decoration: BoxDecoration(
         color: const Color(0xFF1A1A1A),
         borderRadius: BorderRadius.circular(16),
