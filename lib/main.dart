@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_profile/firebase_options.dart';
 import 'package:my_profile/notifiers/providers.dart';
-import 'package:my_profile/screen/dashbord/dashbord_screen.dart';
-import 'package:my_profile/screen/home/home_screen.dart';
+import 'package:my_profile/res/app_constant.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:go_router/go_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,23 +27,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final router = GoRouter(
-      routes: [
-        GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
-        GoRoute(
-          path: '/Dashbord',
-          builder: (context, state) => const DashboardScreen(),
-        ),
-        // ⬅️ هنا المسار الديناميكي
-        /* GoRoute(
-          path: '/product/:id',
-          builder: (context, state) {
-            final productId = state.params['id']!; // جلب الـ id من الرابط
-            return ProductPage(productId: productId);
-          },
-        ),*/
-      ],
-    );
     return MultiProvider(
       providers: providers,
       child: MaterialApp.router(
@@ -55,7 +36,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: const Color(0xFF0F1418),
           textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'monospace'),
         ),
-        routerConfig: router,
+        routerConfig: AppConstant().router,
       ),
     );
   }
