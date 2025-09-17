@@ -57,6 +57,14 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
   final PageController _pageController = PageController();
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _emailController = TextEditingController(
+    text: "",
+  );
+  final TextEditingController _passwordController = TextEditingController(
+    text: "",
+  );
 
   @override
   initState() {
@@ -230,10 +238,251 @@ class _HomeScreenState extends State<HomeScreen> {
                           SizedBox(height: 10),
                           IconButton(
                             onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => DashboardScreen(),
-                                ),
+                              showDialog(
+                                context: context,
+                                builder:
+                                    (context) => Dialog(
+                                      child: SizedBox(
+                                        height: 300,
+                                        width: 300,
+                                        child: Form(
+                                          key: _formKey,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: [
+                                              const SizedBox(height: 10),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: 30,
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    IconButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      icon: Icon(
+                                                        FontAwesomeIcons
+                                                            .arrowLeft,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "Login",
+                                                      style: const TextStyle(
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                    IconButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      icon: Icon(
+                                                        FontAwesomeIcons
+                                                            .circleXmark,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              const SizedBox(height: 20),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    size: 20,
+                                                    FontAwesomeIcons.user,
+                                                    color: const Color(
+                                                      0xFFC7C7C7,
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 10),
+                                                  SizedBox(
+                                                    width: 200,
+                                                    child: TextFormField(
+                                                      controller:
+                                                          _emailController,
+                                                      validator:
+                                                          (value) =>
+                                                              value == null ||
+                                                                      !value
+                                                                          .contains(
+                                                                            "@",
+                                                                          )
+                                                                  ? "Enter a valid email"
+                                                                  : null,
+                                                      obscureText: false,
+                                                      style: const TextStyle(
+                                                        color: Colors.white,
+                                                      ),
+                                                      decoration: InputDecoration(
+                                                        hintText: "Email",
+                                                        hintStyle:
+                                                            const TextStyle(
+                                                              color: Color(
+                                                                0xFF8E8E93,
+                                                              ),
+                                                            ),
+                                                        filled: true,
+                                                        fillColor: const Color(
+                                                          0xFF3A3A3C,
+                                                        ),
+
+                                                        // استخدام FaIcon للأيقونات
+                                                        border: OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                15.0,
+                                                              ),
+                                                          borderSide:
+                                                              BorderSide.none,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+
+                                              const SizedBox(height: 20),
+
+                                              // حقل كلمة المرور مع أيقونة Font Awesome
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    size: 20,
+                                                    FontAwesomeIcons.key,
+                                                    color: const Color(
+                                                      0xFFC7C7C7,
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 10),
+                                                  SizedBox(
+                                                    width: 200,
+                                                    child: TextFormField(
+                                                      controller:
+                                                          _passwordController,
+                                                      validator:
+                                                          (value) =>
+                                                              value == null ||
+                                                                      value
+                                                                          .isEmpty
+                                                                  ? "Enter your Passwrd"
+                                                                  : null,
+                                                      obscureText: true,
+                                                      style: const TextStyle(
+                                                        color: Colors.white,
+                                                      ),
+                                                      decoration: InputDecoration(
+                                                        hintText: "Password",
+                                                        hintStyle:
+                                                            const TextStyle(
+                                                              color: Color(
+                                                                0xFF8E8E93,
+                                                              ),
+                                                            ),
+                                                        filled: true,
+                                                        fillColor: const Color(
+                                                          0xFF3A3A3C,
+                                                        ),
+
+                                                        // استخدام FaIcon للأيقونات
+                                                        border: OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                15.0,
+                                                              ),
+                                                          borderSide:
+                                                              BorderSide.none,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 10),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: 30,
+                                                ),
+
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    if (_formKey.currentState!
+                                                        .validate()) {
+                                                      if (_emailController
+                                                                  .text ==
+                                                              Provider.of<
+                                                                    ApiServiceFirebase
+                                                                  >(
+                                                                    context,
+                                                                    listen:
+                                                                        false,
+                                                                  )
+                                                                  .profileModel
+                                                                  .email &&
+                                                          _passwordController
+                                                                  .text ==
+                                                              Provider.of<
+                                                                    ApiServiceFirebase
+                                                                  >(
+                                                                    context,
+                                                                    listen:
+                                                                        false,
+                                                                  )
+                                                                  .profileModel
+                                                                  .password) {
+                                                        Navigator.of(
+                                                          context,
+                                                        ).pushReplacement(
+                                                          MaterialPageRoute(
+                                                            builder:
+                                                                (context) =>
+                                                                    DashboardScreen(),
+                                                          ),
+                                                        );
+                                                      } else {
+                                                        return;
+                                                      }
+                                                    }
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        const Color(0xFFFFC107),
+                                                    padding:
+                                                        const EdgeInsets.symmetric(
+                                                          vertical: 18.0,
+                                                        ),
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            15.0,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                  child: const Text(
+                                                    'LogIn',
+                                                    style: TextStyle(
+                                                      color: Color(0xFF1C1C1E),
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                               );
                             },
                             icon: _SocialIcon(icon: FontAwesomeIcons.gear),
