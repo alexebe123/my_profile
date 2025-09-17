@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_profile/model/education_history_model.dart';
 import 'package:my_profile/model/experience_history_model.dart';
 import 'package:my_profile/notifiers/api_service_firebase.dart';
@@ -533,9 +534,7 @@ class _HomeScreenState extends State<HomeScreen> {
       final api = Provider.of<ApiServiceFirebase>(context, listen: false);
       if (_emailController.text == api.profileModel.email &&
           _passwordController.text == api.profileModel.password) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => DashboardScreen()),
-        );
+        context.go('/Dashbord');
       }
     }
   }
